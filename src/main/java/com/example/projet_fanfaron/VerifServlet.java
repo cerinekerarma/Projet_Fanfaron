@@ -7,7 +7,7 @@ import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @WebServlet("/verif")
 public class VerifServlet extends HttpServlet {
@@ -19,16 +19,18 @@ public class VerifServlet extends HttpServlet {
 
         // Récupération des paramètres du formulaire
         String login = req.getParameter("login");
+        String nom = req.getParameter("name");
+        String prenom = req.getParameter("prenom");
         String mail = req.getParameter("mail");
         String mail2 = req.getParameter("mail2");
         String password = req.getParameter("password");
         String password2 = req.getParameter("password2");
-        String gender = req.getParameter("gender");
+        String genre = req.getParameter("gender");
         String preferences = req.getParameter("preferences");
 
         // Vérifications de base
         if (!mail.equals(mail2) || !password.equals(password2)) {
-            res.sendRedirect("erreur.jsp"); // Crée une page erreur avec un message clair
+            res.sendRedirect("erreur_credentials.jsp");
             return;
         }
 
@@ -36,39 +38,39 @@ public class VerifServlet extends HttpServlet {
 
         try {
             Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/webdb", "web_user", "motdepasse");
+            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FanfaronDB", "fanfaron_user", "fanfaron_password");
 
-            // Vérification de l’unicité du login et de l’email
-            String checkQuery = "SELECT * FROM utilisateur WHERE login = ? OR mail = ?";
+            // Vérification de l’unicité du login
+            String checkQuery = "SELECT login FROM fanfaron WHERE login = ?";
             PreparedStatement checkStmt = con.prepareStatement(checkQuery);
             checkStmt.setString(1, login);
-            checkStmt.setString(2, mail);
             ResultSet rs = checkStmt.executeQuery();
 
             if (rs.next()) {
-                // Un utilisateur existe déjà avec ce login ou email
+                // Utilisateur déjà existant
                 res.sendRedirect("erreur_utilisateur_existe.html");
                 return;
             }
 
-            // Insertion de l'utilisateur
+            // Insertion dans la table fanfaron
             String insertQuery = """
-                INSERT INTO utilisateur (login, mail, mdp, genre, preferences, date_creation, derniere_connexion)
-                VALUES (?, ?, digest(?, 'sha256'), ?, ?, ?, NULL)
+                INSERT INTO fanfaron (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, date_creation, derniere_connection)
+                VALUES (?, ?, ?, ?, ?, digest(?, 'sha256'), ?, ?, NULL)
                 """;
 
             PreparedStatement insertStmt = con.prepareStatement(insertQuery);
             insertStmt.setString(1, login);
-            insertStmt.setString(2, mail);
-            insertStmt.setString(3, password);
-            insertStmt.setString(4, gender);
-            insertStmt.setString(5, preferences);
-            insertStmt.setDate(6, Date.valueOf(LocalDate.now())); // date de création = aujourd’hui
+            insertStmt.setString(2, nom);
+            insertStmt.setString(3, prenom);
+            insertStmt.setString(4, mail);
+            insertStmt.setString(5, genre);
+            insertStmt.setString(6, password);
+            insertStmt.setString(7, preferences);
+            insertStmt.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
 
             int rows = insertStmt.executeUpdate();
 
             if (rows > 0) {
-                // Connexion automatique de l’utilisateur
                 HttpSession session = req.getSession(true);
                 session.setAttribute("login", login);
                 res.sendRedirect("menu.html");

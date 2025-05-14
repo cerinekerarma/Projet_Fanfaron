@@ -4,15 +4,21 @@
 <head>
   <meta charset="UTF-8">
   <title>Inscription</title>
-  <link rel="stylesheet" href="" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 <div class="conteneur">
   <div class="section">
     <h2>Inscription</h2>
     <form action="verif" method="POST">
-      <label for="login">Nom d'utilisateur :</label>
+      <label for="login">Login :</label>
       <input type="text" id="login" name="login" placeholder="Entrez votre login" required><br>
+
+      <label for="login">Nom :</label>
+      <input type="text" id="name" name="name" placeholder="Entrez votre nom" required><br>
+
+      <label for="login">Prénom :</label>
+      <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" required><br>
 
       <label for="login">Adresse mail :</label>
       <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required><br>

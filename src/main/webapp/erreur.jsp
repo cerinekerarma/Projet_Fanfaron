@@ -30,7 +30,7 @@
 <div class="error-container">
     <h1>Échec de l'inscription</h1>
     <p>Une erreur est survenue lors de l'inscription. Veuillez vérifier vos informations et réessayer.</p>
-    <p><a href="inscription.html">Retour à la page d'inscription</a></p>
+    <p><a href="formulaire.jsp">Retour à la page d'inscription</a></p>
 </div>
 </body>
 </html>
