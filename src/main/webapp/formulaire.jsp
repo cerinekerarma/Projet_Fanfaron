@@ -3,19 +3,22 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Identification</title>
+  <title>Inscription</title>
   <link rel="stylesheet" href="" />
 </head>
 <body>
 <div class="conteneur">
   <div class="section">
-    <h2>Connexion</h2>
+    <h2>Inscription</h2>
     <form action="verif" method="POST">
       <label for="login">Nom d'utilisateur :</label>
       <input type="text" id="login" name="login" placeholder="Entrez votre login" required><br>
 
       <label for="login">Adresse mail :</label>
-      <input type="text" id="mail" name="mail" placeholder="Entrez votre adresse mail" required><br>
+      <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required><br>
+
+      <label for="login">Adresse mail :</label>
+      <input type="email" id="mail2" name="mail" placeholder="Entrez votre adresse mail" required><br>
 
       <label for="password">Mot de passe :</label>
       <input type="password" id="password" name="password" placeholder="Saisissez votre mot de passe" required><br>
@@ -40,16 +43,16 @@
       <fieldset>
         <legend> Préférences alimentaires :</legend>
 
-        <input type="checkbox" id="none" name="preferences" value="aucune">
+        <input type="radio" id="none" name="preferences" value="aucune">
         <label for="none">Aucune</label><br>
 
-        <input type="checkbox" id="vegeterian" name="preferences" value="végétarien">
+        <input type="radio" id="vegeterian" name="preferences" value="végétarien">
         <label for="none">Végétarien</label><br>
 
-        <input type="checkbox" id="vegan" name="preferences" value="végan">
+        <input type="radio" id="vegan" name="preferences" value="végan">
         <label for="none">Végan</label><br>
 
-        <input type="checkbox" id="withoutporc" name="preferences" value="sansporc">
+        <input type="radio" id="withoutporc" name="preferences" value="sansporc">
         <label for="withoutporc">Sans Porc</label><br>
 
       </fieldset>
