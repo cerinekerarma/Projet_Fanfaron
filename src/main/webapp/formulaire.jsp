@@ -23,7 +23,7 @@
       <label for="login">Adresse mail :</label>
       <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required><br>
 
-      <label for="login">Adresse mail :</label>
+      <label for="login">Adresse mail vérification :</label>
       <input type="email" id="mail2" name="mail" placeholder="Entrez votre adresse mail" required><br>
 
       <label for="password">Mot de passe :</label>
@@ -65,9 +65,6 @@
 
       <button type="submit">S'inscrire</button>
     </form>
-    <div class="link">
-      <a href="/forgot-password">Mot de passe oublié ?</a>
-    </div>
   </div>
 </div>
 </body>

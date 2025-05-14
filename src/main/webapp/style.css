@@ -2,7 +2,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: #f5f7fa;
+    background: #fff2f6;
     margin: 0;
     padding: 0;
 }
@@ -10,7 +10,7 @@ body {
 .conteneur {
     max-width: 600px;
     margin: 50px auto;
-    background: #f8d7da;
+    background: #f6ced2;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -26,7 +26,7 @@ form label {
     display: block;
     margin: 12px 0 6px;
     font-weight: bold;
-    color: #444;
+    color: #dc3545;
 }
 
 form input[type="text"],
@@ -56,7 +56,7 @@ fieldset {
 
 fieldset legend {
     font-weight: bold;
-    color: #555;
+    color: #dc3545;
     padding: 0 5px;
 }
 
@@ -68,7 +68,7 @@ button[type="submit"] {
     margin-top: 20px;
     width: 100%;
     padding: 12px;
-    background-color: #007BFF;
+    background-color: #dc3545;
     color: white;
     border: none;
     font-size: 16px;
@@ -81,16 +81,3 @@ button[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-.link {
-    margin-top: 15px;
-    text-align: center;
-}
-
-.link a {
-    color: #007BFF;
-    text-decoration: none;
-}
-
-.link a:hover {
-    text-decoration: underline;
-}
