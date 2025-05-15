@@ -1,6 +1,6 @@
 package dao;
 
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 public class Fanfaron {
     private String login;
@@ -10,15 +10,15 @@ public class Fanfaron {
     private String genre;
     private String mdp;
     private String crtAlimentaire;
-    private LocalDateTime derniereConnection;
-    private LocalDateTime dateCreation;
+    private Timestamp derniereConnection;
+    private Timestamp dateCreation;
 
     public Fanfaron() {
         // Constructeur par défaut
     }
 
     public Fanfaron(String login, String nom, String prenom, String adresse, String genre,
-                    String mdp, String crtAlimentaire, LocalDateTime derniereConnection, LocalDateTime dateCreation) {
+                    String mdp, String crtAlimentaire, Timestamp derniereConnection, Timestamp dateCreation) {
         this.login = login;
         this.nom = nom;
         this.prenom = prenom;
@@ -86,19 +86,19 @@ public class Fanfaron {
         this.crtAlimentaire = crtAlimentaire;
     }
 
-    public LocalDateTime getDerniereConnection() {
+    public Timestamp getDerniereConnection() {
         return derniereConnection;
     }
 
-    public void setDerniereConnection(LocalDateTime derniereConnection) {
+    public void setDerniereConnection(Timestamp derniereConnection) {
         this.derniereConnection = derniereConnection;
     }
 
-    public LocalDateTime getDateCreation() {
+    public Timestamp getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(LocalDateTime dateCreation) {
+    public void setDateCreation(Timestamp dateCreation) {
         this.dateCreation = dateCreation;
     }
 
