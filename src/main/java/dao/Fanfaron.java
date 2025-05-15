@@ -12,10 +12,8 @@ public class Fanfaron {
     private String crtAlimentaire;
     private Timestamp derniereConnection;
     private Timestamp dateCreation;
-
-    public Fanfaron() {
-        // Constructeur par défaut
-    }
+    private boolean isAdmin;
+    private boolean activated;
 
     public Fanfaron(String login, String nom, String prenom, String adresse, String genre,
                     String mdp, String crtAlimentaire, Timestamp derniereConnection, Timestamp dateCreation) {
@@ -28,6 +26,8 @@ public class Fanfaron {
         this.crtAlimentaire = crtAlimentaire;
         this.derniereConnection = derniereConnection;
         this.dateCreation = dateCreation;
+        this.isAdmin = false;
+        this.activated = false;
     }
 
     public String getLogin() {
@@ -101,6 +101,23 @@ public class Fanfaron {
     public void setDateCreation(Timestamp dateCreation) {
         this.dateCreation = dateCreation;
     }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    public boolean isActivated() {
+        return activated;
+    }
+
+    public void setActivated(boolean activated) {
+        this.activated = activated;
+    }
+
 
     @Override
     public String toString() {

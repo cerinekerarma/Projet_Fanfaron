@@ -8,6 +8,8 @@ CREATE TABLE "fanfaron" (
                             "crt_alimentaire" TEXT,
                             "derniere_connection" TIMESTAMP,
                             "date_creation" TIMESTAMP,
+                            is_Admin BOOLEAN,
+                            activated BOOLEAN,
                             PRIMARY KEY("login")
 );
 
