@@ -1,4 +1,4 @@
-package com.example.projet_fanfaron;
+package dao;
 
 public class Groupe {
     private int id;

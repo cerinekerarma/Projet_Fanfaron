@@ -1,4 +1,4 @@
-package com.example.projet_fanfaron;
+package dao;
 
 public class Pupitre {
     private int id;

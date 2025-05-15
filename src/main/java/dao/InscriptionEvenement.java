@@ -1,4 +1,4 @@
-package com.example.projet_fanfaron;
+package dao;
 
 public class InscriptionEvenement {
     private String idFanfaron;
