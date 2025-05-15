@@ -1,5 +1,8 @@
 package com.example.projet_fanfaron;
 
+import dao.DAOFactory;
+import dao.Fanfaron;
+import dao.FanfaronDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -8,6 +11,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.Instant;
 
 @WebServlet("/verif")
 public class VerifServlet extends HttpServlet {
@@ -29,69 +33,33 @@ public class VerifServlet extends HttpServlet {
         String preferences = req.getParameter("preferences");
 
         // Vérifications de base
-        if (!mail.equals(mail2) || !password.equals(password2)) {
+        if (!mail.equals(mail2)){
+            System.out.println("mail1: "+mail);
+            System.out.println("mail1: "+mail);
+
+            System.out.println("Erreur mail");
             res.sendRedirect("erreur_credentials.jsp");
             return;
         }
 
-        Connection con = null;
-
-        try {
-            Class.forName("org.postgresql.Driver");
-            con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/FanfaronDB", "fanfaron_user", "fanfaron_password");
-
-            // Vérification de l’unicité du login
-            String checkQuery = "SELECT login FROM fanfaron WHERE login = ?";
-            PreparedStatement checkStmt = con.prepareStatement(checkQuery);
-            checkStmt.setString(1, login);
-            ResultSet rs = checkStmt.executeQuery();
-
-            if (rs.next()) {
-                // Utilisateur déjà existant
-                res.sendRedirect("erreur_utilisateur_existe.html");
-                return;
-            }
-
-            // Insertion dans la table fanfaron
-            String insertQuery = """
-                INSERT INTO fanfaron (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, date_creation, derniere_connection)
-                VALUES (?, ?, ?, ?, ?, digest(?, 'sha256'), ?, ?, NULL)
-                """;
-
-            PreparedStatement insertStmt = con.prepareStatement(insertQuery);
-            insertStmt.setString(1, login);
-            insertStmt.setString(2, nom);
-            insertStmt.setString(3, prenom);
-            insertStmt.setString(4, mail);
-            insertStmt.setString(5, genre);
-            insertStmt.setString(6, password);
-            insertStmt.setString(7, preferences);
-            insertStmt.setTimestamp(8, Timestamp.valueOf(LocalDateTime.now()));
-
-            int rows = insertStmt.executeUpdate();
-
-            if (rows > 0) {
-                HttpSession session = req.getSession(true);
-                session.setAttribute("login", login);
-                res.sendRedirect("menu.html");
-            } else {
-                res.sendRedirect("erreur_insertion.html");
-            }
-
-        } catch (Exception e) {
-            out.println("""
-            <!DOCTYPE html>
-            <html lang="fr">
-            <head><meta charset="UTF-8"><title>Erreur</title></head>
-            <body>
-            <h2>Erreur de traitement :</h2>
-            <p>""" + e.getMessage() + "</p></body></html>");
-        } finally {
-            try {
-                if (con != null && !con.isClosed()) con.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        if(!password.equals(password2)) {
+            System.out.println("Erreur mdp");
+            res.sendRedirect("erreur_credentials.jsp");
+            return;
         }
+
+        Timestamp tempsActuel= Timestamp.from(Instant.now());
+
+        FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+        Fanfaron fanfaron = new Fanfaron(login, nom, prenom, mail, password, genre, preferences, tempsActuel, tempsActuel );
+        boolean fanfaronInserted = fanfaronDAO.insert(fanfaron);
+        if (!fanfaronInserted) {
+            System.out.println("Erreur ne peut pas inserer un fanfaron");
+            res.sendRedirect("erreur_utilisateur_existe.jsp");
+        }
+        else{
+            res.sendRedirect("index.jsp");
+        }
+
     }
 }
