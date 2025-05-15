@@ -10,7 +10,10 @@
 <div class="conteneur">
   <div class="section">
     <h2>Inscription</h2>
-    <form action="verif" method="POST">
+    <form action="UserControler" method="POST">
+
+      <input type="text" id="action" name="action" hidden value = "ajouter" ><br>
+
       <label for="login">Login :</label>
       <input type="text" id="login" name="login" placeholder="Entrez votre login" required><br>
 
