@@ -53,7 +53,7 @@ public class UserControler extends HttpServlet {
                     Timestamp tempsActuel= Timestamp.from(Instant.now());
 
                     FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
-                    Fanfaron fanfaron = new Fanfaron(login, nom, prenom, mail, password, genre, preferences, tempsActuel, tempsActuel );
+                    Fanfaron fanfaron = new Fanfaron(login, nom, prenom, mail, genre, password, preferences, tempsActuel, tempsActuel, false, false );
                     boolean fanfaronInserted = fanfaronDAO.insert(fanfaron);
                     if (!fanfaronInserted) {
                         System.out.println("Erreur ne peut pas inserer un fanfaron");

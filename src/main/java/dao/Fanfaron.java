@@ -16,7 +16,8 @@ public class Fanfaron {
     private boolean activated;
 
     public Fanfaron(String login, String nom, String prenom, String adresse, String genre,
-                    String mdp, String crtAlimentaire, Timestamp derniereConnection, Timestamp dateCreation) {
+                    String mdp, String crtAlimentaire, Timestamp derniereConnection, Timestamp dateCreation, boolean isAdmin
+                    , boolean activated) {
         this.login = login;
         this.nom = nom;
         this.prenom = prenom;
@@ -26,8 +27,8 @@ public class Fanfaron {
         this.crtAlimentaire = crtAlimentaire;
         this.derniereConnection = derniereConnection;
         this.dateCreation = dateCreation;
-        this.isAdmin = false;
-        this.activated = false;
+        this.isAdmin = isAdmin;
+        this.activated = activated;
     }
 
     public String getLogin() {

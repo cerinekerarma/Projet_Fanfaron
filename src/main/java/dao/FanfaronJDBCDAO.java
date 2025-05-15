@@ -14,7 +14,7 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
     @Override
     public boolean insert(Fanfaron fanfaron) {
         try (Connection conn = dbManager.getConnection()) {
-            String query = "INSERT INTO Fanfaron (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING login";
+            String query = "INSERT INTO Fanfaron (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING login";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, fanfaron.getLogin());
                 stmt.setString(2, fanfaron.getNom());
@@ -25,6 +25,8 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
                 stmt.setString(7, fanfaron.getCrtAlimentaire());
                 stmt.setTimestamp(8, new Timestamp(fanfaron.getDerniereConnection().getTime()));
                 stmt.setTimestamp(9, new Timestamp(fanfaron.getDateCreation().getTime()));
+                stmt.setBoolean(10, fanfaron.isAdmin());
+                stmt.setBoolean(11, fanfaron.isActivated());
 
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
@@ -53,7 +55,7 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
 
     @Override
     public Fanfaron find(long id) {
-        String sql = "SELECT login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation FROM Joueur WHERE login = ?";
+        String sql = "SELECT login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated FROM Joueur WHERE login = ?";
         try (Connection connection = dbManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setLong(1, id);
@@ -68,7 +70,9 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
                             rs.getString("mdp"),
                             rs.getString("crt_alimentaire"),
                             rs.getTimestamp("derniere_connection"),
-                            rs.getTimestamp("date_creation")
+                            rs.getTimestamp("date_creation"),
+                            rs.getBoolean("is_admin"),
+                            rs.getBoolean("activated")
                     );
                 }
             }
