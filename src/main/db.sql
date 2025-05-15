@@ -1,9 +1,3 @@
-CREATE TABLE "incription_pupitre" (
-                                      "id_fanfaron" TEXT NOT NULL UNIQUE,
-                                      "id_pupitre" INTEGER NOT NULL UNIQUE,
-                                      PRIMARY KEY("id_fanfaron", "id_pupitre")
-);
-
 CREATE TABLE "fanfaron" (
                             "login" TEXT NOT NULL UNIQUE,
                             "nom" TEXT,
@@ -24,8 +18,9 @@ CREATE TABLE "evenement" (
                              "lieu" TEXT,
                              "description" TEXT,
                              "type" TEXT,
-                             "createur" TEXT,
-                             PRIMARY KEY("id")
+                             "createur" TEXT NOT NULL,
+                             PRIMARY KEY("id"),
+                             FOREIGN KEY("createur") REFERENCES "fanfaron"("login") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "groupe" (
@@ -40,47 +35,29 @@ CREATE TABLE "pupitre" (
                            PRIMARY KEY("id")
 );
 
+CREATE TABLE "incription_pupitre" (
+                                      "id_fanfaron" TEXT NOT NULL,
+                                      "id_pupitre" INTEGER NOT NULL,
+                                      PRIMARY KEY("id_fanfaron", "id_pupitre"),
+                                      FOREIGN KEY("id_fanfaron") REFERENCES "fanfaron"("login") ON UPDATE CASCADE ON DELETE CASCADE,
+                                      FOREIGN KEY("id_pupitre") REFERENCES "pupitre"("id") ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 CREATE TABLE "incription_groupe" (
-                                     "id_fanfaron" TEXT NOT NULL UNIQUE,
-                                     "id_groupe" INTEGER NOT NULL UNIQUE,
-                                     PRIMARY KEY("id_fanfaron", "id_groupe")
+                                     "id_fanfaron" TEXT NOT NULL,
+                                     "id_groupe" INTEGER NOT NULL,
+                                     PRIMARY KEY("id_fanfaron", "id_groupe"),
+                                     FOREIGN KEY("id_fanfaron") REFERENCES "fanfaron"("login") ON UPDATE CASCADE ON DELETE CASCADE,
+                                     FOREIGN KEY("id_groupe") REFERENCES "groupe"("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE "inscription_evenement" (
-                                         "id_fanfaron" TEXT NOT NULL UNIQUE,
+                                         "id_fanfaron" TEXT NOT NULL,
                                          "id_pupitre" INTEGER NOT NULL,
                                          "id_evenement" INTEGER NOT NULL,
                                          "status" TEXT,
-                                         PRIMARY KEY("id_fanfaron", "id_pupitre", "id_evenement")
+                                         PRIMARY KEY("id_fanfaron", "id_pupitre", "id_evenement"),
+                                         FOREIGN KEY("id_fanfaron") REFERENCES "fanfaron"("login") ON UPDATE CASCADE ON DELETE CASCADE,
+                                         FOREIGN KEY("id_pupitre") REFERENCES "pupitre"("id") ON UPDATE CASCADE ON DELETE CASCADE,
+                                         FOREIGN KEY("id_evenement") REFERENCES "evenement"("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-ALTER TABLE "evenement"
-ADD CONSTRAINT unique_createur UNIQUE ("createur");
-
-ALTER TABLE "fanfaron"
-    ADD FOREIGN KEY("login") REFERENCES "incription_groupe"("id_fanfaron")
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "groupe"
-    ADD FOREIGN KEY("id") REFERENCES "incription_groupe"("id_groupe")
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "fanfaron"
-    ADD FOREIGN KEY("login") REFERENCES "incription_pupitre"("id_fanfaron")
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "incription_pupitre"
-    ADD FOREIGN KEY("id_pupitre") REFERENCES "pupitre"("id")
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "inscription_evenement"
-    ADD FOREIGN KEY("id_fanfaron") REFERENCES "fanfaron"("login")
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "inscription_evenement"
-    ADD FOREIGN KEY("id_pupitre") REFERENCES "pupitre"("id")
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-ALTER TABLE "inscription_evenement"
-    ADD FOREIGN KEY("id_evenement") REFERENCES "evenement"("id")
-        ON UPDATE NO ACTION ON DELETE NO ACTION;
