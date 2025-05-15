@@ -24,7 +24,7 @@
       <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required><br>
 
       <label for="login">Adresse mail vérification :</label>
-      <input type="email" id="mail2" name="mail" placeholder="Entrez votre adresse mail" required><br>
+      <input type="email" id="mail2" name="mail2" placeholder="Entrez votre adresse mail" required><br>
 
       <label for="password">Mot de passe :</label>
       <input type="password" id="password" name="password" placeholder="Saisissez votre mot de passe" required><br>

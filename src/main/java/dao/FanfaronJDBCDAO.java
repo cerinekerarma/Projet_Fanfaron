@@ -14,7 +14,7 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
     @Override
     public boolean insert(Fanfaron fanfaron) {
         try (Connection conn = dbManager.getConnection()) {
-            String query = "INSERT INTO Joueur (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING login";
+            String query = "INSERT INTO Fanfaron (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING login";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, fanfaron.getLogin());
                 stmt.setString(2, fanfaron.getNom());
@@ -53,7 +53,7 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
 
     @Override
     public Fanfaron find(long id) {
-        return null; // Si aucun joueur n'est trouvé
+        return null; // Si aucun fanfaron n'est trouvé
     }
 
     @Override
