@@ -6,6 +6,6 @@ public interface FanfaronDAO {
     boolean insert(Fanfaron fanfaron);
     boolean update(Fanfaron fanfaron);
     boolean delete(long id);
-    Fanfaron find(long id);
+    Fanfaron find(String id);
     List<Fanfaron> findAll();
 }

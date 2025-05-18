@@ -14,7 +14,7 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
     @Override
     public boolean insert(Fanfaron fanfaron) {
         try (Connection conn = dbManager.getConnection()) {
-            String query = "INSERT INTO Fanfaron (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING login";
+            String query = "INSERT INTO Fanfaron (login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated) VALUES (?, ?, ?, ?, ?, digest(?, 'sha256'), ?, ?, ?, ?, ?) RETURNING login";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
                 stmt.setString(1, fanfaron.getLogin());
                 stmt.setString(2, fanfaron.getNom());
@@ -31,7 +31,6 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
                 ResultSet rs = stmt.executeQuery();
                 if (rs.next()) {
                     String login = rs.getString("login");
-                    fanfaron.setLogin(login);
                     return true;
                 }
                 return false;
@@ -54,11 +53,11 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
     }
 
     @Override
-    public Fanfaron find(long id) {
-        String sql = "SELECT login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated FROM Joueur WHERE login = ?";
+    public Fanfaron find(String id) {
+        String sql = "SELECT login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated FROM Fanfaron  WHERE login = ?";
         try (Connection connection = dbManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setLong(1, id);
+            stmt.setString(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     return new Fanfaron(

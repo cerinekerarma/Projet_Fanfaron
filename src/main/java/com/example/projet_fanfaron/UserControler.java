@@ -36,28 +36,33 @@ public class UserControler extends HttpServlet {
 
                     // Vérifications de base
                     if (!mail.equals(mail2)){
-                        System.out.println("mail1: "+mail);
-                        System.out.println("mail1: "+mail);
-
-                        System.out.println("Erreur mail");
-                        vue = "erreur_credentials.jsp";
+                        req.setAttribute("message", "Veuillez saisir 2 mails identiques.");
+                        vue = "formulaire.jsp";
                         break;
                     }
 
                     if(!password.equals(password2)) {
-                        System.out.println("Erreur mdp");
-                        vue = "erreur_credentials.jsp";
+                        req.setAttribute("message", "Veuillez saisir 2 mots de passe identiques.");
+                        vue = "formulaire.jsp";
                         break;
                     }
+
+
 
                     Timestamp tempsActuel= Timestamp.from(Instant.now());
 
                     FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
                     Fanfaron fanfaron = new Fanfaron(login, nom, prenom, mail, genre, password, preferences, tempsActuel, tempsActuel, false, false );
+                    Fanfaron f = fanfaronDAO.find(login);
+                    //System.out.println(f.toString());
+                    if(f!= null) {
+                        req.setAttribute("message", "Veuillez saisir un autre login, login déjà existant.");
+                        vue = "formulaire.jsp";
+                        break;
+                    }
                     boolean fanfaronInserted = fanfaronDAO.insert(fanfaron);
                     if (!fanfaronInserted) {
                         System.out.println("Erreur ne peut pas inserer un fanfaron");
-                        vue = "erreur_credentials.jsp";
                     }
                     else{
                         vue = "index.jsp";

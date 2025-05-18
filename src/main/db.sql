@@ -4,7 +4,7 @@ CREATE TABLE "fanfaron" (
                             "prenom" TEXT,
                             "adresse" TEXT,
                             "genre" TEXT,
-                            "mdp" TEXT,
+                            "mdp" BYTEA NOT NULL ,
                             "crt_alimentaire" TEXT,
                             "derniere_connection" TIMESTAMP,
                             "date_creation" TIMESTAMP,

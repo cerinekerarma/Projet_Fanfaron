@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Inscription</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -12,58 +12,60 @@
     <h2>Inscription</h2>
     <form action="UserControler" method="POST">
 
-      <input type="text" id="action" name="action" hidden value = "ajouter" ><br>
+      <input type="hidden" id="action" name="action" value="ajouter" />
+
+      <% String msg = (String) request.getAttribute("message");
+        if(msg != null){ %>
+      <h4><%= msg %></h4>
+      <% } %>
 
       <label for="login">Login :</label>
-      <input type="text" id="login" name="login" placeholder="Entrez votre login" required><br>
+      <input type="text" id="login" name="login" placeholder="Entrez votre login" required />
 
-      <label for="login">Nom :</label>
-      <input type="text" id="name" name="name" placeholder="Entrez votre nom" required><br>
+      <label for="name">Nom :</label>
+      <input type="text" id="name" name="name" placeholder="Entrez votre nom" required />
 
-      <label for="login">Prénom :</label>
-      <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" required><br>
+      <label for="prenom">Prénom :</label>
+      <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" required />
 
-      <label for="login">Adresse mail :</label>
-      <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required><br>
+      <label for="mail">Adresse mail :</label>
+      <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required />
 
-      <label for="login">Adresse mail vérification :</label>
-      <input type="email" id="mail2" name="mail2" placeholder="Entrez votre adresse mail" required><br>
+      <label for="mail2">Adresse mail vérification :</label>
+      <input type="email" id="mail2" name="mail2" placeholder="Entrez votre adresse mail" required />
 
       <label for="password">Mot de passe :</label>
-      <input type="password" id="password" name="password" placeholder="Saisissez votre mot de passe" required><br>
+      <input type="password" id="password" name="password" placeholder="Saisissez votre mot de passe" required />
 
-      <label for="password">Mot de passe vérification:</label>
-      <input type="password" id="password2" name="password2" placeholder="Saisissez votre mot de passe" required><br>
+      <label for="password2">Mot de passe vérification :</label>
+      <input type="password" id="password2" name="password2" placeholder="Saisissez votre mot de passe" required />
 
       <fieldset>
         <legend>Genre :</legend>
+        <input type="radio" id="male" name="gender" value="homme" />
+        <label for="male">Homme</label>
 
-        <input type="radio" id="male" name="gender" value="homme">
-        <label for="male">Homme</label><br>
-
-        <input type="radio" id="female" name="gender" value="femme">
+        <input type="radio" id="female" name="gender" value="femme" />
         <label for="female">Femme</label>
 
-        <input type="radio" id="other" name="gender" value="autre">
+        <input type="radio" id="other" name="gender" value="autre" />
         <label for="other">Autre</label>
-
       </fieldset>
-      <br>
+
       <fieldset>
-        <legend> Préférences alimentaires :</legend>
+        <legend>Préférences alimentaires :</legend>
 
-        <input type="radio" id="none" name="preferences" value="aucune">
-        <label for="none">Aucune</label><br>
+        <input type="radio" id="none" name="preferences" value="aucune" />
+        <label for="none">Aucune</label>
 
-        <input type="radio" id="vegeterian" name="preferences" value="végétarien">
-        <label for="none">Végétarien</label><br>
+        <input type="radio" id="vegeterian" name="preferences" value="végétarien" />
+        <label for="vegeterian">Végétarien</label>
 
-        <input type="radio" id="vegan" name="preferences" value="végan">
-        <label for="none">Végan</label><br>
+        <input type="radio" id="vegan" name="preferences" value="végan" />
+        <label for="vegan">Végan</label>
 
-        <input type="radio" id="withoutporc" name="preferences" value="sansporc">
-        <label for="withoutporc">Sans Porc</label><br>
-
+        <input type="radio" id="withoutporc" name="preferences" value="sansporc" />
+        <label for="withoutporc">Sans Porc</label>
       </fieldset>
 
       <button type="submit">S'inscrire</button>
