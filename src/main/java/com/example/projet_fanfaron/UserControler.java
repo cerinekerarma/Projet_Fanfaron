@@ -8,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.sql.Timestamp;
@@ -54,7 +55,6 @@ public class UserControler extends HttpServlet {
                     FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
                     Fanfaron fanfaron = new Fanfaron(login, nom, prenom, mail, genre, password, preferences, tempsActuel, tempsActuel, false, false );
                     Fanfaron f = fanfaronDAO.find(login);
-                    //System.out.println(f.toString());
                     if(f!= null) {
                         req.setAttribute("message", "Veuillez saisir un autre login, login déjà existant.");
                         vue = "formulaire.jsp";
@@ -66,6 +66,8 @@ public class UserControler extends HttpServlet {
                     }
                     else{
                         vue = "index.jsp";
+                        HttpSession session = req.getSession(true);
+                        session.setAttribute("user", fanfaron);
                     }
                     break;
                 }
