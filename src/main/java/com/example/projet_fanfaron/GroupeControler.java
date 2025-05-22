@@ -21,7 +21,8 @@ public class GroupeControler extends HttpServlet {
 
         HttpSession session = req.getSession(true);
         if (session.getAttribute("user") == null) {
-            res.sendRedirect("/UserControler");
+            res.sendRedirect("UserControler");
+            return;
         }
         String login = ((Fanfaron) session.getAttribute("user")).getLogin();
 
@@ -34,7 +35,7 @@ public class GroupeControler extends HttpServlet {
                 case "desinscription": {
                     int groupeId = Integer.parseInt(req.getParameter("groupeId"));
                     InscriptionGroupeDAO inscDAO = DAOFactory.getInscriptionGroupeDAO();
-                    boolean conf = inscDAO.delete("t", groupeId);
+                    boolean conf = inscDAO.delete(login, groupeId);
                     if(conf){
                         req.setAttribute("message", "Vous avez bien été désinscrit !");
                     } else {
@@ -46,7 +47,7 @@ public class GroupeControler extends HttpServlet {
                 case "inscription": {
                     System.out.println("inscription");
                     int groupeId = Integer.parseInt(req.getParameter("groupeId"));
-                    InscriptionGroupe inscGroupe = new InscriptionGroupe("t", groupeId);
+                    InscriptionGroupe inscGroupe = new InscriptionGroupe(login, groupeId);
                     InscriptionGroupeDAO inscDAO = DAOFactory.getInscriptionGroupeDAO();
                     boolean conf = inscDAO.insert(inscGroupe);
                     if(conf){

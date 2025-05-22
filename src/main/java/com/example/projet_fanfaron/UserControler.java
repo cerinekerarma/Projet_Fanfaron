@@ -23,7 +23,7 @@ public class UserControler extends HttpServlet {
 
         try {
             switch (action) {
-
+                case null:
                 case "connexion": {
                     String login = req.getParameter("login");
                     String password = req.getParameter("password");
@@ -36,13 +36,13 @@ public class UserControler extends HttpServlet {
                         vue = "connexion.jsp";
                         break;
                     }
-
+                    /*
                     if (!fanfaron.isActivated()) {
                         req.setAttribute("message", "Votre compte n’est pas encore activé.");
                         vue = "connexion.jsp";
                         break;
                     }
-
+                    */
                     // Connexion réussie
                     HttpSession session = req.getSession(true);
                     session.setAttribute("user", fanfaron);
@@ -106,7 +106,6 @@ public class UserControler extends HttpServlet {
                         session.setAttribute("user", fanfaron);
                         vue = "index.jsp";
                     }
-
                     break;
                 }
 
