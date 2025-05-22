@@ -23,8 +23,46 @@ public class UserControler extends HttpServlet {
 
         try {
             switch (action) {
+
+                case "connexion": {
+                    String login = req.getParameter("login");
+                    String password = req.getParameter("password");
+
+                    FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+                    Fanfaron fanfaron = fanfaronDAO.matchPassword(login, password);
+
+                    if (fanfaron == null ) {
+                        req.setAttribute("message", "Login ou mot de passe incorrect.");
+                        vue = "connexion.jsp";
+                        break;
+                    }
+
+                    if (!fanfaron.isActivated()) {
+                        req.setAttribute("message", "Votre compte n’est pas encore activé.");
+                        vue = "connexion.jsp";
+                        break;
+                    }
+
+                    // Connexion réussie
+                    HttpSession session = req.getSession(true);
+                    session.setAttribute("user", fanfaron);
+                    vue = "menu.jsp";
+                    break;
+                }
+
+                case "versInscription": {
+                    vue = "formulaire.jsp";
+                    break;
+                }
+
+                case "versConnexion": {
+                    vue = "connexion.jsp";
+                    break;
+                }
+
+
                 case "ajouter": {
-                    // Récupération des paramètres du formulaire
+                    // Formulaire d'inscription
                     String login = req.getParameter("login");
                     String nom = req.getParameter("name");
                     String prenom = req.getParameter("prenom");
@@ -35,51 +73,54 @@ public class UserControler extends HttpServlet {
                     String genre = req.getParameter("gender");
                     String preferences = req.getParameter("preferences");
 
-                    // Vérifications de base
-                    if (!mail.equals(mail2)){
+                    if (!mail.equals(mail2)) {
                         req.setAttribute("message", "Veuillez saisir 2 mails identiques.");
                         vue = "formulaire.jsp";
                         break;
                     }
 
-                    if(!password.equals(password2)) {
+                    if (!password.equals(password2)) {
                         req.setAttribute("message", "Veuillez saisir 2 mots de passe identiques.");
                         vue = "formulaire.jsp";
                         break;
                     }
 
-
-
-                    Timestamp tempsActuel= Timestamp.from(Instant.now());
+                    Timestamp tempsActuel = Timestamp.from(Instant.now());
 
                     FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
-                    Fanfaron fanfaron = new Fanfaron(login, nom, prenom, mail, genre, password, preferences, tempsActuel, tempsActuel, false, false );
+                    Fanfaron fanfaron = new Fanfaron(login, nom, prenom, mail, genre, password, preferences, tempsActuel, tempsActuel, false, false);
                     Fanfaron f = fanfaronDAO.find(login);
-                    if(f!= null) {
+
+                    if (f != null) {
                         req.setAttribute("message", "Veuillez saisir un autre login, login déjà existant.");
                         vue = "formulaire.jsp";
                         break;
                     }
-                    boolean fanfaronInserted = fanfaronDAO.insert(fanfaron);
-                    if (!fanfaronInserted) {
-                        System.out.println("Erreur ne peut pas inserer un fanfaron");
-                    }
-                    else{
-                        vue = "index.jsp";
+
+                    boolean inserted = fanfaronDAO.insert(fanfaron);
+                    if (!inserted) {
+                        System.out.println("Erreur : impossible d'insérer un fanfaron.");
+                        vue = "formulaire.jsp";
+                    } else {
                         HttpSession session = req.getSession(true);
                         session.setAttribute("user", fanfaron);
+                        vue = "index.jsp";
                     }
+
                     break;
                 }
+
                 default:
                     res.sendError(404, "Action non supportée");
                     return;
             }
+
         } catch (Exception e) {
             e.printStackTrace();
             res.sendError(500, "Erreur serveur : " + e.getMessage());
             return;
         }
+
         req.getRequestDispatcher(vue).forward(req, res);
     }
 }

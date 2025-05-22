@@ -67,6 +67,18 @@ input[type="radio"] {
     margin-right: 6px;
 }
 
+a {
+    color: #dc3545;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+
+a:hover {
+    color: #a52828;
+}
+
+
 button[type="submit"] {
     margin-top: 20px;
     width: 100%;
