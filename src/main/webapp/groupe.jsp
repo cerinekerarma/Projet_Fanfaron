@@ -5,29 +5,245 @@
 <head>
     <title>Inscription à un Groupe</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: sans-serif;
+            background: #f6ced2;
+            padding-top: 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1, h2 {
+            color: #dc3545;
+            font-weight: bold;
+            margin-bottom: 20px;
             text-align: center;
         }
-        select, button {
-            padding: 8px;
-            margin-top: 20px;
-        }
+
         form {
-            margin-top: 40px;
+            margin: 20px 0 40px;
+            text-align: center;
         }
+
+        select {
+            padding: 8px;
+            font-size: 1rem;
+            border: 2px solid #ac2a37;
+            border-radius: 4px;
+            width: 250px;
+            margin-left: 10px;
+        }
+
+        button {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-left: 15px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #bb2d3b;
+        }
+
+        p.message {
+            color: #bb2d3b;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto 40px;
+            border-collapse: collapse;
+            width: 60%;
+            max-width: 600px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            border: 2px solid #ac2a37;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #ffa6aa;
+        }
+
+        form.inline-form {
+            margin: 0;
+        }
+
+        /* Navbar copied from profil.jsp */
+        nav.navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #dc3545;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5em 2em;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        nav.navbar ul.primary {
+            display: flex;
+            gap: 2em;
+            list-style: none;
+        }
+
+        nav.navbar ul.primary > li > a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5em 0;
+            transition: color 0.3s;
+        }
+
+        nav.navbar ul.primary > li > a:hover {
+            color: #ffb3b3;
+        }
+
+        nav.navbar ul.primary li {
+            position: relative;
+        }
+
+        nav.navbar ul.sub {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #dc3545;
+            padding: 0.5em 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            list-style: none;
+        }
+
+        nav.navbar ul.primary li:hover > ul.sub {
+            display: block;
+        }
+
+        nav.navbar ul.sub li {
+            width: 200px;
+        }
+
+        nav.navbar ul.sub li a {
+            display: block;
+            padding: 0.5em 1em;
+            color: white;
+            text-decoration: none;
+        }
+
+        nav.navbar ul.sub li a:hover {
+            background-color: #bb2d3b;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5em;
+        }
+
+        .avatar-dropdown {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .avatar-dropdown img {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .avatar-menu {
+            display: none;
+            position: absolute;
+            top: 110%;
+            right: 0;
+            background-color: #dc3545;
+            list-style: none;
+            padding: 0.5em 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            min-width: 150px;
+            z-index: 1001;
+        }
+
+        .avatar-dropdown:hover .avatar-menu {
+            display: block;
+        }
+
+        .avatar-menu li a {
+            display: block;
+            padding: 0.5em 1em;
+            color: white;
+            text-decoration: none;
+        }
+
+        .avatar-menu li a:hover {
+            background-color: #bb2d3b;
+        }
+
     </style>
 </head>
 <body>
+
+<nav class="navbar">
+    <ul class="primary">
+        <li><a href="menu.jsp">Accueil</a></li>
+        <li>
+            <a href="#">Rejoindre</a>
+            <ul class="sub">
+                <li><a href="${pageContext.request.contextPath}/GroupeControler">Rejoindre un groupe</a></li>
+                <li><a href="${pageContext.request.contextPath}/PupitreControler">Rejoindre un pupitre</a></li>
+                <li><a href="${pageContext.request.contextPath}/EvenementControler">Rejoindre un évènement</a></li>
+            </ul>
+        </li>
+        <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
+    </ul>
+
+    <div class="navbar-right">
+        <div class="avatar-dropdown">
+            <img src="profil.png" alt="Profil">
+            <ul class="avatar-menu">
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
 <h1>Choisissez un groupe pour vous inscrire</h1>
+
 <%
     String message = (String) request.getAttribute("message");
     if (message != null) {
 %>
-<p style="color: green; font-weight: bold;"><%= message %></p>
+<p class="message"><%= message %></p>
 <%
     }
 %>
+
 <%
     List<Groupe> groupes = (List<Groupe>) request.getAttribute("groupes");
     if (groupes != null && !groupes.isEmpty()) {
@@ -44,37 +260,39 @@
             }
         %>
     </select>
-    <br>
     <button type="submit">S'inscrire</button>
 </form>
 <%
 } else {
 %>
-<p>Aucun groupe disponible.</p>
+<p style="text-align:center;">Aucun groupe disponible.</p>
 <%
     }
 %>
 
 <h2>Groupes où vous êtes inscrit</h2>
+
 <%
     List<Groupe> inscGroupes = (List<Groupe>) request.getAttribute("inscGroupes");
     if (inscGroupes != null && !inscGroupes.isEmpty()) {
 %>
-<table style="margin: 0 auto; border-collapse: collapse;">
+<table>
+    <thead>
     <tr>
-        <th style="padding: 8px; border: 1px solid #ccc;">Nom du groupe</th>
-        <th style="padding: 8px; border: 1px solid #ccc;">Action</th>
+        <th>Nom du groupe</th>
+        <th>Action</th>
     </tr>
+    </thead>
+    <tbody>
     <%
         for (Groupe groupe : inscGroupes) {
     %>
     <tr>
-        <td style="padding: 8px; border: 1px solid #ccc;"><%= groupe.getNom() %></td>
-        <td style="padding: 8px; border: 1px solid #ccc;">
-            <form action="GroupeControler" method="post" style="margin: 0;">
+        <td><%= groupe.getNom() %></td>
+        <td>
+            <form action="GroupeControler" method="post" class="inline-form">
                 <input type="hidden" name="action" value="desinscription" />
                 <input type="hidden" name="groupeId" value="<%= groupe.getId() %>" />
-                <!-- Id du fanfaron à récupérer d'une autre source (session ?) -->
                 <button type="submit">Se désinscrire</button>
             </form>
         </td>
@@ -82,11 +300,12 @@
     <%
         }
     %>
+    </tbody>
 </table>
 <%
 } else {
 %>
-<p>Vous n'êtes inscrit à aucun groupe.</p>
+<p style="text-align:center;">Vous n'êtes inscrit à aucun groupe.</p>
 <%
     }
 %>
