@@ -10,6 +10,9 @@ public class DAOFactory{
     public static GroupeDAO getGroupeDAO(){
         return new GroupeJDBCDAO(dbManager);
     }
+    public static InscriptionGroupeDAO getInscriptionGroupeDAO(){
+        return new InscriptionGroupeJDBCDAO(dbManager);
+    }
 
     //TODO Mettre les DAO la dedans
 

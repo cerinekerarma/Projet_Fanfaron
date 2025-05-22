@@ -66,3 +66,21 @@ CREATE TABLE "inscription_evenement" (
 
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO fanfaron_user;
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+INSERT INTO groupe (nom)
+VALUES
+    ('Commission prestation'),
+    ('Commission artistique'),
+    ('Commission logistique'),
+    ('Commission communication interne');
+
+INSERT INTO pupitre (nom)
+VALUES
+    ('Clarinette'),
+    ('Saxophone alto'),
+    ('Euphonium'),
+    ('Percussion'),
+    ('Basse'),
+    ('Trompette'),
+    ('Saxophone baryton'),
+    ('Trombone');
