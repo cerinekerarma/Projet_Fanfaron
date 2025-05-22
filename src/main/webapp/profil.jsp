@@ -213,6 +213,11 @@
     Fanfaron fanfaron = (Fanfaron) session.getAttribute("user");
     if (fanfaron != null) {
 %>
+<% String message = (String) request.getAttribute("message");
+    if (message != null) { %>
+<p style="color:#bb2d3b; text-align:center;"><%= message %></p>
+<% } %>
+
 <table>
     <tr>
         <th>Login</th>
@@ -247,6 +252,13 @@
 <div style="text-align: center;">
     <a href="${pageContext.request.contextPath}/UserControler?action=modifier_profil">Modifier</a>
 </div>
+<div style="text-align: center;">
+    <a href="${pageContext.request.contextPath}/UserControler?action=suppression"
+       onclick="return confirm('Confirmer la suppression du compte');">
+        Supprimer le compte
+    </a>
+</div>
+
 
 <%
 } else {

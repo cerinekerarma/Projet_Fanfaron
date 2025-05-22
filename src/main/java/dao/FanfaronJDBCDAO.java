@@ -79,8 +79,17 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
     }
 
     @Override
-    public boolean delete(long id) {
-        return false;
+    public boolean delete(String login) {
+        // exemple avec JDBC
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement ps = conn.prepareStatement("DELETE FROM fanfaron WHERE login = ?")) {
+            ps.setString(1, login);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

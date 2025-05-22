@@ -171,6 +171,33 @@ public class UserControler extends HttpServlet {
                     }
                     break;
                 }
+                case "suppression": {
+                    HttpSession session = req.getSession(false);
+                    if (session != null) {
+                        Fanfaron deletedUser = (Fanfaron) session.getAttribute("user");
+                        if (deletedUser != null) {
+                            FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+                            boolean deleted = fanfaronDAO.delete(deletedUser.getLogin());
+
+                            if (deleted) {
+                                session.invalidate();
+                                System.out.println("user "+deletedUser.getLogin()+" est deleted.");
+                                vue = "formulaire.jsp";
+                            } else {
+                                req.setAttribute("message", "Erreur dans la suppression de votre compte.");
+                                vue = "profil.jsp";
+                            }
+                        } else {
+                            req.setAttribute("message", "Votre session a expiré, votre compte n'a pas pu être supprimé.");
+                            vue = "connexion.jsp";
+                        }
+                    } else {
+                        req.setAttribute("message", "Session expirée, veuillez vous reconnecter.");
+                        vue = "connexion.jsp";
+                    }
+                    vue = "formulaire.jsp";
+                    break;
+                }
                 default:
                     vue = "connexion.jsp";
                     res.sendError(404, "Action non supportée");
