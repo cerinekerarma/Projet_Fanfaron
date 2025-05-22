@@ -13,7 +13,7 @@ body {
     background: #f6ced2;
     margin: 0;
     padding: 0;
-    padding-top: 70px; /* pour compenser le menu fixe */
+    padding-top: 70px;
     display: flex;
     flex-direction: column;
 }
@@ -152,7 +152,6 @@ nav.navbar ul.sub li a:hover {
     background-color: #bb2d3b;
 }
 
-/* 🦶 Footer ultra fin et stylé */
 .footer-dark {
     padding: 10px 0;
     color: white;
