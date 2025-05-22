@@ -37,7 +37,7 @@ CREATE TABLE "pupitre" (
                            PRIMARY KEY("id")
 );
 
-CREATE TABLE "incription_pupitre" (
+CREATE TABLE "inscription_pupitre" (
                                       "id_fanfaron" TEXT NOT NULL,
                                       "id_pupitre" INTEGER NOT NULL,
                                       PRIMARY KEY("id_fanfaron", "id_pupitre"),
@@ -45,7 +45,7 @@ CREATE TABLE "incription_pupitre" (
                                       FOREIGN KEY("id_pupitre") REFERENCES "pupitre"("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE "incription_groupe" (
+CREATE TABLE "inscription_groupe" (
                                      "id_fanfaron" TEXT NOT NULL,
                                      "id_groupe" INTEGER NOT NULL,
                                      PRIMARY KEY("id_fanfaron", "id_groupe"),
@@ -63,3 +63,6 @@ CREATE TABLE "inscription_evenement" (
                                          FOREIGN KEY("id_pupitre") REFERENCES "pupitre"("id") ON UPDATE CASCADE ON DELETE CASCADE,
                                          FOREIGN KEY("id_evenement") REFERENCES "evenement"("id") ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO fanfaron_user;
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
