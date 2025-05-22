@@ -37,7 +37,7 @@
         }
 
         th {
-            background-color: #ff8995;
+            background-color: #ffa6aa;
         }
 
         a {

@@ -38,7 +38,12 @@
 
 <div class="content">
   <h1>Bienvenue dans <em>La Farandole des Fanfarons</em></h1>
-  <p>Explication du site</p>
+  <img src="fanfare_img.jpg" alt="Fanfare en pleine action" class="fanfare-img" />
+
+  <p>FanfareHub, c’est la plateforme faite par et pour les fanfarons. Que tu sois trompettiste déchaîné, percussionniste fidèle ou nouveau souffle curieux de rejoindre l'aventure, ici tu trouveras tout ce qu’il te faut pour vivre ta fanfare à fond. Inscris-toi facilement, retrouve le planning des répétitions, inscris-toi aux prestations et ne rate aucun atelier !
+    Notre objectif : simplifier l’organisation, booster la convivialité et faire résonner la musique partout où la fanfare passe. Alors accorde ton pupitre, chauffe tes valves, et entre dans le rythme avec FanfareHub ! 🎶
+  </p>
+
 </div>
 
 <div class="footer-dark">

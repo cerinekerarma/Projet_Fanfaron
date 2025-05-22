@@ -188,3 +188,13 @@ nav.navbar ul.sub li a:hover {
     font-size: 0.8em;
     color: #fdd;
 }
+
+.fanfare-img {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    display: block;
+    margin: 0 auto 2rem;
+    border-radius: 10px;
+}
+

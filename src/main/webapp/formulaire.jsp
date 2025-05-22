@@ -8,12 +8,14 @@
 </head>
 <body>
 <div class="conteneur">
+  <%--
   <% if (request.getSession(true).getAttribute("user") != null){%>
     <jsp:forward page="connexion.jsp"/>
   <%}%>
+  --%>
   <div class="section">
     <h2>Inscription</h2>
-    <form action="UserControler" method="POST">
+    <form action="${pageContext.request.contextPath}/UserControler" method="POST">
 
       <input type="hidden" id="action" name="action" value="ajouter" />
 

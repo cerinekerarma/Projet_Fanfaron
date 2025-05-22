@@ -44,7 +44,7 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
     @Override
     public boolean update(Fanfaron fanfaron) {
         boolean hasPassword = fanfaron.getMdp() != null && !fanfaron.getMdp().trim().isEmpty();
-
+        System.out.println("dans update: "+fanfaron.getMdp());
         String query;
         if (hasPassword) {
             query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, mdp = digest(?, 'sha256'), crt_alimentaire = ? WHERE login = ?";

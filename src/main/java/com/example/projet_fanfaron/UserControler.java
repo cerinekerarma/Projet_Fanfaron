@@ -19,7 +19,7 @@ public class UserControler extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String action = req.getParameter("action");
-        String vue; // Vue par défaut
+        String vue = "connexion.jsp"; // Vue par défaut
 
         try {
             switch (action) {
@@ -31,8 +31,9 @@ public class UserControler extends HttpServlet {
                     FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
                     Fanfaron fanfaron = fanfaronDAO.matchPassword(login, password);
 
-                    if (fanfaron == null ) {
+                    if (fanfaron == null) {
                         req.setAttribute("message", "Login ou mot de passe incorrect.");
+                        System.out.println("Tentative de connexion echouee pour: login=" + login + ", password=" + password);
                         vue = "connexion.jsp";
                         break;
                     }
@@ -43,9 +44,9 @@ public class UserControler extends HttpServlet {
                         break;
                     }
                     */
-                    // Connexion réussie
                     HttpSession session = req.getSession(true);
                     session.setAttribute("user", fanfaron);
+                    System.out.println("Tentative de connexion reussi pour: login=" + login + ", password=" + password);
                     vue = "menu.jsp";
                     break;
                 }
@@ -144,8 +145,11 @@ public class UserControler extends HttpServlet {
 
                     if (password == null || password.trim().isEmpty()) {
                         // on garde l'ancien mdp s'il le user l'a pas modifie
-                        password = currentUser.getMdp();
+                        //password = currentUser.getMdp();
+                        password = null;
                     }
+
+
 
                     Fanfaron updatedFanfaron = new Fanfaron(
                             login, nom, prenom, mail, genre, password, preferences,

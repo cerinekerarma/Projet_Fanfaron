@@ -96,6 +96,130 @@ button[type="submit"]:hover {
     background-color: #a52828; /* Rouge foncé */
 }
 
+h1 {
+    margin-top: 50px;
+    text-align: center;
+    color: #dc3545;
+    font-weight: bold;
+}
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #dc3545;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5em 2em;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+nav.navbar ul.primary {
+    display: flex;
+    gap: 2em;
+}
+
+nav.navbar ul.primary li {
+    position: relative;
+}
+
+nav.navbar ul.primary > li > a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 0.5em 0;
+    transition: color 0.3s;
+}
+
+nav.navbar ul.primary > li > a:hover {
+    color: #ffb3b3;
+}
+
+nav.navbar ul.sub {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #dc3545;
+    padding: 0.5em 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+nav.navbar ul.primary li:hover > ul.sub {
+    display: block;
+}
+
+nav.navbar ul.sub li {
+    width: 200px;
+}
+
+nav.navbar ul.sub li a {
+    display: block;
+    padding: 0.5em 1em;
+    color: white;
+    text-decoration: none;
+}
+
+nav.navbar ul.sub li a:hover {
+    background-color: #bb2d3b;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.avatar-dropdown {
+    position: relative;
+    cursor: pointer;
+}
+
+.avatar-dropdown img {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.avatar-menu {
+    display: none;
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: #dc3545;
+    list-style: none;
+    padding: 0.5em 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    min-width: 150px;
+    z-index: 1001;
+}
+
+.avatar-dropdown:hover .avatar-menu {
+    display: block;
+}
+
+.avatar-menu li a {
+    display: block;
+    padding: 0.5em 1em;
+    color: white;
+    text-decoration: none;
+}
+
+.avatar-menu li a:hover {
+    background-color: #bb2d3b;
+}
+
+
+
 
 
 
