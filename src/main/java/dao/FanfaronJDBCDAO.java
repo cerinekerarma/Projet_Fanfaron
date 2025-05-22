@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FanfaronJDBCDAO implements FanfaronDAO {
-    private DbConnectionManager dbManager;
+    private final DbConnectionManager dbManager;
 
     public FanfaronJDBCDAO(DbConnectionManager dbManager) {
         this.dbManager = dbManager;
@@ -57,25 +57,25 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
         String sql = "SELECT login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated FROM Fanfaron  WHERE login = ?";
         try (Connection connection = dbManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-            stmt.setString(1, id);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Fanfaron(
-                            rs.getString("login"),
-                            rs.getString("nom"),
-                            rs.getString("prenom"),
-                            rs.getString("adresse"),
-                            rs.getString("genre"),
-                            rs.getString("mdp"),
-                            rs.getString("crt_alimentaire"),
-                            rs.getTimestamp("derniere_connection"),
-                            rs.getTimestamp("date_creation"),
-                            rs.getBoolean("is_admin"),
-                            rs.getBoolean("activated")
-                    );
+                stmt.setString(1, id);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return new Fanfaron(
+                                rs.getString("login"),
+                                rs.getString("nom"),
+                                rs.getString("prenom"),
+                                rs.getString("adresse"),
+                                rs.getString("genre"),
+                                rs.getString("mdp"),
+                                rs.getString("crt_alimentaire"),
+                                rs.getTimestamp("derniere_connection"),
+                                rs.getTimestamp("date_creation"),
+                                rs.getBoolean("is_admin"),
+                                rs.getBoolean("activated")
+                        );
+                    }
                 }
-            }
-        } catch (SQLException e) {
+            } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
