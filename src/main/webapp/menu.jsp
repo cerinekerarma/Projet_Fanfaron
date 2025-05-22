@@ -15,9 +15,9 @@
       <li>
         <a href="#">Rejoindre</a>
         <ul class="sub">
-          <li><a href="groupe.jsp">Rejoindre un groupe</a></li>
-          <li><a href="pupitre.jsp">Rejoindre un pupitre</a></li>
-          <li><a href="evenement_rejoindre.jsp">Rejoindre un évènement</a></li>
+          <li><a href="${pageContext.request.contextPath}/GroupeControler">Rejoindre un groupe</a></li>
+          <li><a href="${pageContext.request.contextPath}/PupitreControler">Rejoindre un pupitre</a></li>
+          <li><a href="${pageContext.request.contextPath}/EvenementControler">Rejoindre un évènement</a></li>
         </ul>
       </li>
       <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
@@ -27,11 +27,12 @@
       <div class="avatar-dropdown">
         <img src="profil.png" alt="Profil">
         <ul class="avatar-menu">
-          <li><a href="profil.jsp">Profil</a></li>
-          <li><a href="connexion.jsp">Déconnexion</a></li>
+          <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
+          <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
         </ul>
       </div>
     </div>
+
   </nav>
 </div>
 

@@ -9,7 +9,7 @@
 <body>
 <div class="conteneur">
   <% if (request.getSession(true).getAttribute("user") != null){%>
-    <jsp:forward page="index.jsp"/>
+    <jsp:forward page="connexion.jsp"/>
   <%}%>
   <div class="section">
     <h2>Inscription</h2>

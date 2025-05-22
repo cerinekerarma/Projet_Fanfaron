@@ -19,7 +19,7 @@ public class UserControler extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
         String action = req.getParameter("action");
-        String vue = "formulaire.jsp"; // Vue par défaut
+        String vue; // Vue par défaut
 
         try {
             switch (action) {
@@ -59,8 +59,14 @@ public class UserControler extends HttpServlet {
                     vue = "connexion.jsp";
                     break;
                 }
-
-
+                case "consulter_profil": {
+                    vue = "profil.jsp";
+                    break;
+                }
+                case "modifier_profil": {
+                    vue = "modification.jsp";
+                    break;
+                }
                 case "ajouter": {
                     // Formulaire d'inscription
                     String login = req.getParameter("login");
@@ -104,12 +110,13 @@ public class UserControler extends HttpServlet {
                     } else {
                         HttpSession session = req.getSession(true);
                         session.setAttribute("user", fanfaron);
-                        vue = "index.jsp";
+                        vue = "connexion.jsp";
                     }
                     break;
                 }
 
                 default:
+                    vue = "connexion.jsp";
                     res.sendError(404, "Action non supportée");
                     return;
             }
