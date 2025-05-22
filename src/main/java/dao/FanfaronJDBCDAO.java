@@ -41,10 +41,41 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
         }
     }
 
-
     @Override
     public boolean update(Fanfaron fanfaron) {
-        return false;
+        boolean hasPassword = fanfaron.getMdp() != null && !fanfaron.getMdp().trim().isEmpty();
+
+        String query;
+        if (hasPassword) {
+            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, mdp = digest(?, 'sha256'), crt_alimentaire = ? WHERE login = ?";
+        } else {
+            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, crt_alimentaire = ? WHERE login = ?";
+        }
+
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, fanfaron.getNom());
+            stmt.setString(2, fanfaron.getPrenom());
+            stmt.setString(3, fanfaron.getAdresse());
+            stmt.setString(4, fanfaron.getGenre());
+
+            if (hasPassword) {
+                stmt.setString(5, fanfaron.getMdp());
+                stmt.setString(6, fanfaron.getCrtAlimentaire());
+                stmt.setString(7, fanfaron.getLogin());
+            } else {
+                stmt.setString(5, fanfaron.getCrtAlimentaire());
+                stmt.setString(6, fanfaron.getLogin());
+            }
+
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override

@@ -50,7 +50,7 @@
             <input type="email" id="mail" name="mail" value="<%= fanfaron.getAdresse() %>" required/>
 
             <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" value="******" required />
+            <input type="password" id="password" name="password" />
 
             <%
                 String genre = fanfaron.getGenre();
@@ -86,16 +86,13 @@
                 <label for="withoutporc">Sans Porc</label>
             </fieldset>
 
-            <button type="submit">Modifier</button>
+            <button type="submit" onclick="document.getElementById('action').value='modifier'">Mofidier</button>
 
         </form>
-        <a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">
-            Vous avez déjà un compte ? Connectez-vous &lt;--
-        </a>
     </div>
 
     <%
-        } // fin else utilisateur connecté
+        }
     %>
 
 </div>

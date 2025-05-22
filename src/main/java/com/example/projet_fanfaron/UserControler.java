@@ -114,7 +114,59 @@ public class UserControler extends HttpServlet {
                     }
                     break;
                 }
+                case "modifier": {
+                    String login = req.getParameter("login");
+                    String nom = req.getParameter("name");
+                    String prenom = req.getParameter("prenom");
+                    String mail = req.getParameter("mail");
+                    String password = req.getParameter("password");
+                    String genre = req.getParameter("gender");
+                    String preferences = req.getParameter("preferences");
 
+                    HttpSession session = req.getSession();
+                    Fanfaron currentUser = (Fanfaron) session.getAttribute("user");
+
+                    if (currentUser == null) {
+                        vue = "connexion.jsp";
+                        break;
+                    }
+
+                    FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+
+                    if (!login.equals(currentUser.getLogin())) {
+                        Fanfaron existing = fanfaronDAO.find(login);
+                        if (existing != null) {
+                            req.setAttribute("message", "Ce login est déjà utilisé par un autre utilisateur.");
+                            vue = "modification.jsp";
+                            break;
+                        }
+                    }
+
+                    if (password == null || password.trim().isEmpty()) {
+                        // on garde l'ancien mdp s'il le user l'a pas modifie
+                        password = currentUser.getMdp();
+                    }
+
+                    Fanfaron updatedFanfaron = new Fanfaron(
+                            login, nom, prenom, mail, genre, password, preferences,
+                            currentUser.getDerniereConnection(),
+                            currentUser.getDateCreation(),
+                            currentUser.isAdmin(),
+                            currentUser.isActivated()
+                    );
+
+                    boolean updated = fanfaronDAO.update(updatedFanfaron);
+
+                    if (!updated) {
+                        req.setAttribute("message", "Erreur lors de la mise à jour.");
+                        vue = "modification.jsp";
+                    } else {
+                        session.setAttribute("user", updatedFanfaron);
+                        req.setAttribute("message", "Informations modifiées avec succès.");
+                        vue = "profil.jsp";
+                    }
+                    break;
+                }
                 default:
                     vue = "connexion.jsp";
                     res.sendError(404, "Action non supportée");
