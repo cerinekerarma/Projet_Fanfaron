@@ -29,12 +29,12 @@ public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
     }
 
     @Override
-    public boolean delete(long id) {
-        String query = "DELETE FROM inscription_groupe WHERE id_fanfaron = ?";
+    public boolean delete(String login, int groupeId) {
+        String query = "DELETE FROM inscription_groupe WHERE id_fanfaron = ? and id_groupe = ?";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setLong(1, id);
-
+            stmt.setString(1, login);
+            stmt.setInt(2, groupeId);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();

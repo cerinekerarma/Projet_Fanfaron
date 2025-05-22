@@ -32,7 +32,16 @@ public class GroupeControler extends HttpServlet {
                     break;
                 }
                 case "desinscription": {
-
+                    int groupeId = Integer.parseInt(req.getParameter("groupeId"));
+                    InscriptionGroupeDAO inscDAO = DAOFactory.getInscriptionGroupeDAO();
+                    boolean conf = inscDAO.delete("t", groupeId);
+                    if(conf){
+                        req.setAttribute("message", "Vous avez bien été désinscrit !");
+                    } else {
+                        req.setAttribute("message", "Il y a eu une erreur dans votre désinscription...");
+                    }
+                    afficherGroupe(req);
+                    break;
                 }
                 case "inscription": {
                     System.out.println("inscription");
