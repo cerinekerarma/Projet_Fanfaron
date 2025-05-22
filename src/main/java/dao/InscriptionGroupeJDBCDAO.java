@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
@@ -13,15 +14,14 @@ public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
 
     @Override
     public boolean insert(InscriptionGroupe inscriptionGroupe) {
-        try (Connection conn = dbManager.getConnection()) {
-            String query = "INSERT INTO inscription_groupe (id_fanfaron, id_groupe) VALUES (?, ?) RETURNING id_fanfaron";
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, inscriptionGroupe.getIdFanfaron());
-                stmt.setInt(2, inscriptionGroupe.getIdGroupe());
+        String query = "INSERT INTO inscription_groupe (id_fanfaron, id_groupe) VALUES (?, ?) RETURNING id_fanfaron";
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, inscriptionGroupe.getIdFanfaron());
+            stmt.setInt(2, inscriptionGroupe.getIdGroupe());
 
-                ResultSet rs = stmt.executeQuery();
-                return rs.next();
-            }
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -29,22 +29,53 @@ public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
     }
 
     @Override
-    public boolean update(InscriptionGroupe inscriptionGroupe) {
-        return false;
-    }
-
-    @Override
     public boolean delete(long id) {
-        return false;
+        String query = "DELETE FROM inscription_groupe WHERE id_fanfaron = ?";
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setLong(1, id);
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
-    public InscriptionGroupe find(String id) {
+    public InscriptionGroupe find(String idFanfaron) {
+        String query = "SELECT id_fanfaron, id_groupe FROM inscription_groupe WHERE id_fanfaron = ?";
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, idFanfaron);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new InscriptionGroupe(rs.getString("id_fanfaron"), rs.getInt("id_groupe"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     @Override
     public List<InscriptionGroupe> findAll() {
-        return List.of();
+        List<InscriptionGroupe> inscriptions = new ArrayList<>();
+        String query = "SELECT id_fanfaron, id_groupe FROM inscription_groupe";
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                inscriptions.add(new InscriptionGroupe(
+                        rs.getString("id_fanfaron"),
+                        rs.getInt("id_groupe")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return inscriptions;
     }
 }

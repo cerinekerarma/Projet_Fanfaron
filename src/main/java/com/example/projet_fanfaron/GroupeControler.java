@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/GroupeControler")
@@ -18,12 +19,20 @@ public class GroupeControler extends HttpServlet {
         String action = req.getParameter("action");
         String vue = "groupe.jsp"; // Vue par défaut
 
+        HttpSession session = req.getSession(true);
+        if (session.getAttribute("user") == null) {
+            res.sendRedirect("/UserControler");
+        }
+        String login = ((Fanfaron) session.getAttribute("user")).getLogin();
+
         try {
             switch (action) {
-                case "":
                 case null : {
                     afficherGroupe(req);
                     break;
+                }
+                case "desinscription": {
+
                 }
                 case "inscription": {
                     System.out.println("inscription");
@@ -55,5 +64,12 @@ public class GroupeControler extends HttpServlet {
         GroupeDAO groupeDAO = DAOFactory.getGroupeDAO();
         List<Groupe> groupes = groupeDAO.findAll();
         req.setAttribute("groupes", groupes);
+        InscriptionGroupeDAO inscDAO = DAOFactory.getInscriptionGroupeDAO();
+        List<InscriptionGroupe> inscGroupes = inscDAO.findAll();
+        List<Groupe> inscGroupeList = new ArrayList<>();
+        for (InscriptionGroupe inscGroupe : inscGroupes) {
+            inscGroupeList.add(groupeDAO.find(inscGroupe.getIdGroupe()));
+        }
+        req.setAttribute("inscGroupes", inscGroupeList);
     }
 }

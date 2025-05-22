@@ -54,5 +54,42 @@
 <%
     }
 %>
+
+<h2>Groupes où vous êtes inscrit</h2>
+<%
+    List<Groupe> inscGroupes = (List<Groupe>) request.getAttribute("inscGroupes");
+    if (inscGroupes != null && !inscGroupes.isEmpty()) {
+%>
+<table style="margin: 0 auto; border-collapse: collapse;">
+    <tr>
+        <th style="padding: 8px; border: 1px solid #ccc;">Nom du groupe</th>
+        <th style="padding: 8px; border: 1px solid #ccc;">Action</th>
+    </tr>
+    <%
+        for (Groupe groupe : inscGroupes) {
+    %>
+    <tr>
+        <td style="padding: 8px; border: 1px solid #ccc;"><%= groupe.getNom() %></td>
+        <td style="padding: 8px; border: 1px solid #ccc;">
+            <form action="GroupeControler" method="post" style="margin: 0;">
+                <input type="hidden" name="action" value="desinscription" />
+                <input type="hidden" name="groupeId" value="<%= groupe.getId() %>" />
+                <!-- Id du fanfaron à récupérer d'une autre source (session ?) -->
+                <button type="submit">Se désinscrire</button>
+            </form>
+        </td>
+    </tr>
+    <%
+        }
+    %>
+</table>
+<%
+} else {
+%>
+<p>Vous n'êtes inscrit à aucun groupe.</p>
+<%
+    }
+%>
+
 </body>
 </html>

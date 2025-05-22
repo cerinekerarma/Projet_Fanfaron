@@ -17,11 +17,11 @@ public class GroupeJDBCDAO implements GroupeDAO {
 
 
     @Override
-    public Groupe find(String id) {
+    public Groupe find(int id) {
         String sql = "SELECT id, nom FROM Groupe WHERE id = ?";
         try (Connection connection = dbManager.getConnection();
              PreparedStatement stmt = connection.prepareStatement(sql)) {
-                stmt.setString(1, id);
+                stmt.setInt(1, id);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
                         return new Groupe(
