@@ -82,6 +82,36 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
     }
 
     @Override
+    public Fanfaron matchPassword(String id, String password) {
+        String sql = "SELECT login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated FROM Fanfaron  WHERE login = ? and mdp = digest(?, 'sha256')";
+        try (Connection connection = dbManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, id);
+            stmt.setString(2, password);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return new Fanfaron(
+                            rs.getString("login"),
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("adresse"),
+                            rs.getString("genre"),
+                            rs.getString("mdp"),
+                            rs.getString("crt_alimentaire"),
+                            rs.getTimestamp("derniere_connection"),
+                            rs.getTimestamp("date_creation"),
+                            rs.getBoolean("is_admin"),
+                            rs.getBoolean("activated")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
     public List<Fanfaron> findAll() {
         return null;
     }

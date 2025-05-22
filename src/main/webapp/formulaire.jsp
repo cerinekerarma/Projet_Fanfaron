@@ -23,29 +23,29 @@
       <% } %>
 
       <label for="login">Login :</label>
-      <input type="text" id="login" name="login" placeholder="Entrez votre login" required />
+      <input type="text" id="login" name="login" placeholder="Entrez votre login" required/>
 
       <label for="name">Nom :</label>
-      <input type="text" id="name" name="name" placeholder="Entrez votre nom" required />
+      <input type="text" id="name" name="name" placeholder="Entrez votre nom" required/>
 
       <label for="prenom">Prénom :</label>
-      <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" required />
+      <input type="text" id="prenom" name="prenom" placeholder="Entrez votre prénom" required/>
 
       <label for="mail">Adresse mail :</label>
-      <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required />
+      <input type="email" id="mail" name="mail" placeholder="Entrez votre adresse mail" required/>
 
       <label for="mail2">Adresse mail vérification :</label>
-      <input type="email" id="mail2" name="mail2" placeholder="Entrez votre adresse mail" required />
+      <input type="email" id="mail2" name="mail2" placeholder="Entrez votre adresse mail" required/>
 
       <label for="password">Mot de passe :</label>
       <input type="password" id="password" name="password" placeholder="Saisissez votre mot de passe" required />
 
       <label for="password2">Mot de passe vérification :</label>
-      <input type="password" id="password2" name="password2" placeholder="Saisissez votre mot de passe" required />
+      <input type="password" id="password2" name="password2" placeholder="Saisissez votre mot de passe" required/>
 
       <fieldset>
         <legend>Genre :</legend>
-        <input type="radio" id="male" name="gender" value="homme" />
+        <input type="radio" id="male" name="gender" value="homme" required/>
         <label for="male">Homme</label>
 
         <input type="radio" id="female" name="gender" value="femme" />
@@ -58,7 +58,7 @@
       <fieldset>
         <legend>Préférences alimentaires :</legend>
 
-        <input type="radio" id="none" name="preferences" value="aucune" />
+        <input type="radio" id="none" name="preferences" value="aucune" required/>
         <label for="none">Aucune</label>
 
         <input type="radio" id="vegeterian" name="preferences" value="végétarien" />
@@ -71,8 +71,14 @@
         <label for="withoutporc">Sans Porc</label>
       </fieldset>
 
-      <button type="submit">S'inscrire</button>
+      <button type="submit" onclick="document.getElementById('action').value='ajouter'">S'inscrire</button>
+
     </form>
+    <a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">
+      Vous avez déjà un compte ? Connectez-vous <--
+    </a>
+
+
   </div>
 </div>
 </body>

@@ -8,4 +8,5 @@ public interface FanfaronDAO {
     boolean delete(long id);
     Fanfaron find(String id);
     List<Fanfaron> findAll();
+    Fanfaron matchPassword(String id, String password);
 }
