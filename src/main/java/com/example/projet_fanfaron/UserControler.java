@@ -36,19 +36,21 @@ public class UserControler extends HttpServlet {
                     FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
                     Fanfaron fanfaron = fanfaronDAO.matchPassword(login, password);
 
+
                     if (fanfaron == null) {
                         req.setAttribute("message", "Login ou mot de passe incorrect.");
                         System.out.println("Tentative de connexion echouee pour: login=" + login + ", password=" + password);
                         vue = "connexion.jsp";
                         break;
                     }
-                    /*
+
                     if (!fanfaron.isActivated()) {
                         req.setAttribute("message", "Votre compte n’est pas encore activé.");
                         vue = "connexion.jsp";
                         break;
                     }
-                    */
+
+
                     HttpSession session = req.getSession(true);
 
                     if(!fanfaron.isAdmin()){
@@ -71,6 +73,11 @@ public class UserControler extends HttpServlet {
                     vue = "connexion.jsp";
                     break;
                 }
+                case "deconnexion": {
+                    req.getSession().invalidate();
+                    vue = "connexion.jsp";
+                    break;
+                }
                 case "consulter_profil": {
                     vue = "profil.jsp";
                     break;
@@ -80,7 +87,6 @@ public class UserControler extends HttpServlet {
                     break;
                 }
                 case "ajouter": {
-                    // Formulaire d'inscription
                     String login = req.getParameter("login");
                     String nom = req.getParameter("name");
                     String prenom = req.getParameter("prenom");
@@ -119,9 +125,8 @@ public class UserControler extends HttpServlet {
                     if (!inserted) {
                         System.out.println("Erreur : impossible d'insérer un fanfaron.");
                         vue = "formulaire.jsp";
-                    } else {
-                        HttpSession session = req.getSession(true);
-                        session.setAttribute("user", fanfaron);
+                    } else{
+                        req.setAttribute("message", "Inscription réussie. Veuillez attendre l’activation de votre compte par un administrateur.");
                         vue = "connexion.jsp";
                     }
                     break;
@@ -182,6 +187,36 @@ public class UserControler extends HttpServlet {
                     }
                     break;
                 }
+                case "valider": {
+                    String login = req.getParameter("fanfaronID");
+                    FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+                    Fanfaron f = fanfaronDAO.find(login);
+
+                    if (f == null) {
+                        req.setAttribute("message", "Erreur lors de la validation du compte de " + login);
+                    } else {
+                        f.setActivated(true);
+                        boolean updated = fanfaronDAO.update(f);
+                        if (!updated) {
+                            req.setAttribute("message", "Erreur lors de la validation du compte de " + login);
+                        } else {
+                            req.setAttribute("message", "Compte de " + login + " activé avec succès");
+                            System.out.println("Activation du compte de " + login);
+                        }
+                    }
+
+                    afficherFanfarons(req, res);
+                    return;
+                }
+                case "refuser": {
+                    String login = req.getParameter("fanfaronID");
+                    FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+                    Fanfaron f = fanfaronDAO.find(login);
+
+                    afficherFanfarons(req, res);
+                    return;
+                }
+
                 case "suppression": {
                     HttpSession session = req.getSession(false);
                     if (session != null) {

@@ -35,6 +35,12 @@
             text-align: center;
         }
 
+        h4 {
+            text-align: center;
+            color: #d32a2a;
+        }
+
+
         table {
             margin: 20px auto;
             border-collapse: collapse;
@@ -191,7 +197,7 @@
 
         <div class="navbar-right">
             <div class="avatar-dropdown">
-                <img src="profil.png" alt="Profil">
+                <img src="images/profil.png" alt="Profil">
                 <ul class="avatar-menu">
                     <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
                     <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
@@ -204,6 +210,11 @@
 
 <div class="content">
     <h1>GESTION DE COMPTE ADMINISTRATEUR</h1>
+    <% String msg = (String) request.getAttribute("message");
+        if (msg != null) { %>
+    <h4><%= msg %></h4>
+    <% } %>
+
     <%
         List<Fanfaron> fanfarons = (List<Fanfaron>) request.getAttribute("fanfarons");
 
@@ -230,14 +241,14 @@
                 <form action="UserControler" method="post" style="display:inline;">
                     <input type="hidden" name="action" value="valider" />
                     <input type="hidden" name="fanfaronID" value="<%= fanfaron.getLogin() %>" />
-                    <button type="submit" class="btn-valider">Valider</button>
+                    <button type="submit" class="btn-valider" onclick="document.getElementById('action').value='valider'">Valider</button>
                 </form>
             </td>
             <td>
                 <form action="UserControler" method="post" style="display:inline;">
                     <input type="hidden" name="action" value="refuser" />
                     <input type="hidden" name="fanfaronID" value="<%= fanfaron.getLogin() %>" />
-                    <button type="submit" class="btn-refuser">Refuser</button>
+                    <button type="submit" class="btn-refuser" onclick="document.getElementById('action').value='refuser'">Refuser</button>
                 </form>
             </td>
         </tr>

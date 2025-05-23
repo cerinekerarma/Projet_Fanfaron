@@ -5,6 +5,53 @@
   <meta charset="UTF-8" />
   <title>Inscription</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Georgia, serif;
+      background-color: #f6ced2;
+      background-image: url('${pageContext.request.contextPath}/images/background11.jpg');
+      background-repeat: repeat;
+      background-position: top center;
+      background-size: contain;
+      margin: 0;
+      padding: 0;
+    }
+    .conteneur {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #f6ced2;
+      background-image: url('${pageContext.request.contextPath}/images/conteneur4.jpeg');
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    fieldset {
+      margin-top: 20px;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background-color: #fffafa;
+    }
+    form input[type="text"],
+    form input[type="email"],
+    form input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      background-color: #fffafa;
+      border-radius: 6px;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+    }
+
+
+  </style>
+
 </head>
 <body>
 <div class="conteneur">
@@ -76,9 +123,10 @@
       <button type="submit" onclick="document.getElementById('action').value='ajouter'">S'inscrire</button>
 
     </form>
-    <a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">
-      Vous avez déjà un compte ? Connectez-vous <--
-    </a>
+    <h4>Vous avez déjà un compte ?</h4>
+    <button type="submit" onclick="window.location.href='${pageContext.request.contextPath}/UserControler?action=versConnexion'">
+      Se connecter
+    </button>
 
 
   </div>

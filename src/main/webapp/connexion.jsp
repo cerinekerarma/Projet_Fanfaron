@@ -9,7 +9,7 @@
 <body>
 <div class="conteneur">
     <% if (session.getAttribute("user") != null) { %>
-    <jsp:forward page="index.jsp" />
+    <jsp:forward page="acceuil.jsp" />
     <% } %>
 
     <div class="section">
@@ -30,9 +30,10 @@
 
             <button type="submit" onclick="document.getElementById('action').value='connexion'">Se connecter</button>
         </form>
-        <a href="${pageContext.request.contextPath}/UserControler?action=versInscription">
-            Vous n'avez pas de compte ? Inscrivez-vous <--
-        </a>
+        <h4>Vous n'avez pas de compte ?</h4>
+        <button type="submit" onclick="window.location.href='${pageContext.request.contextPath}/UserControler?action=versInscription'">
+            S'inscrire
+        </button>
 
 
     </div>

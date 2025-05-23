@@ -130,8 +130,10 @@ public class Fanfaron {
                 ", genre='" + genre + '\'' +
                 ", mdp='******'" +
                 ", crtAlimentaire='" + crtAlimentaire + '\'' +
-                ", derniereConnection=" + derniereConnection +
-                ", dateCreation=" + dateCreation +
+                ", derniereConnection=" + derniereConnection + '\'' +
+                ", dateCreation=" + dateCreation + '\'' +
+                ", compte activé?=" + activated + '\'' +
+                ", admin?=" + isAdmin +
                 '}';
     }
 }

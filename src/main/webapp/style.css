@@ -1,6 +1,10 @@
 body {
-    font-family: Arial, sans-serif;
-    background: #f6ced2;
+    font-family: Georgia, serif;
+    background-color: #f6ced2;
+    background-image: url("images/profil.png");
+    background-repeat: repeat;
+    background-position: top center;
+    background-size: contain;
     margin: 0;
     padding: 0;
 }
@@ -38,6 +42,7 @@ form input[type="password"] {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
+    background-color: #28a745;
     border-radius: 6px;
     font-size: 14px;
     box-sizing: border-box;
@@ -218,6 +223,20 @@ nav.navbar ul.sub li a:hover {
     background-color: #bb2d3b;
 }
 
+button[type="button"].btn {
+    background-color: #ff8995 !important;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+button[type="button"].btn:hover {
+    background-color: #ff6170 !important;
+}
 
 
 
