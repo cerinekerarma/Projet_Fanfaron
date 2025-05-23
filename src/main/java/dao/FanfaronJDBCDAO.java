@@ -153,7 +153,32 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
 
     @Override
     public List<Fanfaron> findAll() {
-        return null;
+        String sql = "SELECT login, nom, prenom, adresse, genre, mdp, crt_alimentaire, derniere_connection, date_creation, is_admin, activated FROM Fanfaron";
+        List<Fanfaron> fanfarons = new ArrayList<>();
+        try (Connection connection = dbManager.getConnection();
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Fanfaron f = new Fanfaron(
+                            rs.getString("login"),
+                            rs.getString("nom"),
+                            rs.getString("prenom"),
+                            rs.getString("adresse"),
+                            rs.getString("genre"),
+                            rs.getString("mdp"),
+                            rs.getString("crt_alimentaire"),
+                            rs.getTimestamp("derniere_connection"),
+                            rs.getTimestamp("date_creation"),
+                            rs.getBoolean("is_admin"),
+                            rs.getBoolean("activated")
+                    );
+                    fanfarons.add(f);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return fanfarons;
     }
 
 }

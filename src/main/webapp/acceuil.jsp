@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8">
   <title>La Farandole des Fanfarons</title>
-  <link rel="stylesheet" href="menu_style.css">
+  <link rel="stylesheet" href="acceuil_style.css">
 </head>
 <body>
 <div class="wrap">
   <span class="decor"></span>
   <nav class="navbar">
     <ul class="primary">
-      <li><a href="menu.jsp">Accueil</a></li>
+      <li><a href="acceuil.jsp">Accueil</a></li>
       <li>
         <a href="#">Rejoindre</a>
         <ul class="sub">

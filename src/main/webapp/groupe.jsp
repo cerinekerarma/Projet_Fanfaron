@@ -210,7 +210,7 @@
 
 <nav class="navbar">
     <ul class="primary">
-        <li><a href="menu.jsp">Accueil</a></li>
+        <li><a href="acceuil.jsp">Accueil</a></li>
         <li>
             <a href="#">Rejoindre</a>
             <ul class="sub">

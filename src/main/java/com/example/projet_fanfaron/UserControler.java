@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/UserControler")
 public class UserControler extends HttpServlet {
@@ -24,6 +26,9 @@ public class UserControler extends HttpServlet {
         try {
             switch (action) {
                 case null:
+                case "gerer_comptes":
+                    afficherFanfarons(req, res);
+                    return;
                 case "connexion": {
                     String login = req.getParameter("login");
                     String password = req.getParameter("password");
@@ -45,9 +50,15 @@ public class UserControler extends HttpServlet {
                     }
                     */
                     HttpSession session = req.getSession(true);
-                    session.setAttribute("user", fanfaron);
-                    System.out.println("Tentative de connexion reussi pour: login=" + login + ", password=" + password);
-                    vue = "menu.jsp";
+
+                    if(!fanfaron.isAdmin()){
+                        session.setAttribute("user", fanfaron);
+                        System.out.println("Tentative de connexion reussi pour: login=" + login + ", password=" + password);
+                        vue = "acceuil.jsp";
+                    }
+                    else{
+                        vue = "page_admin.jsp";
+                    }
                     break;
                 }
 
@@ -211,5 +222,18 @@ public class UserControler extends HttpServlet {
         }
 
         req.getRequestDispatcher(vue).forward(req, res);
+
     }
+
+    private void afficherFanfarons(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+        FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+        List<Fanfaron> fanfarons = fanfaronDAO.findAll();
+        req.setAttribute("fanfarons", fanfarons);
+        for (Fanfaron fanfaron : fanfarons) {
+            System.out.println(fanfaron.toString());
+        }
+        req.getRequestDispatcher("/acceptation_inscription_admin.jsp").forward(req, res);
+
+    }
+
 }

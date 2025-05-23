@@ -84,3 +84,14 @@ VALUES
     ('Trompette'),
     ('Saxophone baryton'),
     ('Trombone');
+
+INSERT INTO fanfaron (
+    login, nom, prenom, adresse, genre, mdp, crt_alimentaire,
+    derniere_connection, date_creation, is_Admin, activated
+)
+VALUES (
+           'admin', 'admin', 'admin', 'admin@admin.fr', 'Autre',
+           digest('admin123', 'sha256'),
+           'Aucun', NOW(), NOW(), TRUE, TRUE
+       );
+
