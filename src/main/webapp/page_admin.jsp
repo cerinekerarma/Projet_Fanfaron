@@ -188,6 +188,13 @@
             font-family: var(--font-main);
             border-radius: 20px 20px 0 0;
         }
+        .footer-dark p {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            color: white;
+        }
+
 
         .footer-dark a {
             color: var(--sunset-light);

@@ -243,7 +243,7 @@
             border-bottom: none;
         }
 
-        button.btn-valider {
+        button.btn-modifier {
             background: linear-gradient(45deg, #ff6a5f, #feb47b);
             border: none;
             color: #fff;
@@ -257,7 +257,7 @@
             user-select: none;
         }
 
-        button.btn-valider:hover {
+        button.btn-modifier:hover {
             box-shadow: 0 6px 25px rgba(255, 106, 95, 0.8);
             transform: scale(1.05);
         }
@@ -280,7 +280,7 @@
                 font-size: 2rem;
             }
 
-            button.btn-valider {
+            button.btn-modifier {
                 padding: 8px 16px;
                 font-size: 0.9rem;
             }
@@ -319,6 +319,83 @@
             padding-top: 80px;
         }
 
+        form label {
+            display: block;
+            margin: 12px 0 6px;
+            font-weight: bold;
+            color: #a63d1a;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d08662;
+            background-color: rgba(255, 248, 240, 0.9);
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease;
+        }
+
+        form input:focus {
+            border-color: #ff6f3c;
+            outline: none;
+        }
+
+        fieldset {
+            margin-top: 20px;
+            padding: 10px 15px;
+            border: 1px solid #e5b79a;
+            border-radius: 6px;
+            background-color: rgba(255, 248, 240, 0.85);
+        }
+
+        fieldset legend {
+            font-weight: bold;
+            color: #b63e18;
+            padding: 0 5px;
+        }
+
+        form input::placeholder {
+            color: rgba(255, 161, 114, 0.8);
+            font-style: italic;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+
+        button[type="submit"],
+        button[type="button"].btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background-color: #e4572e;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover,
+        button[type="button"].btn:hover {
+            background-color: #b63e18;
+        }
+
+        a {
+            color: #b63e18;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #812d11;
+        }
+
+
         .footer-dark {
             background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-deep));
             color: white;
@@ -353,32 +430,32 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <ul class="primary">
-            <li><a href="page_admin.jsp">Accueil</a></li>
-            <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
-            <li>
-                <a href="#">Gérer les comptes</a>
-                <ul class="sub">
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=gerer_comptes">Nouveaux comptes</a></li>
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=modifier_comptes">Comptes existants</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div class="navbar-logo">
-            <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
-        </div>
+<nav class="navbar">
+    <ul class="primary">
+        <li><a href="page_admin.jsp">Accueil</a></li>
+        <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
+        <li>
+            <a href="#">Gérer les comptes</a>
+            <ul class="sub">
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=gerer_comptes">Nouveaux comptes</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=modifier_comptes">Comptes existants</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="navbar-logo">
+        <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
+    </div>
 
-        <div class="navbar-right">
-            <div class="avatar-dropdown">
-                <img src="images/profil.png" alt="Profil" />
-                <ul class="avatar-menu">
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
-                </ul>
-            </div>
+    <div class="navbar-right">
+        <div class="avatar-dropdown">
+            <img src="images/profil.png" alt="Profil" />
+            <ul class="avatar-menu">
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
 <div class="content">
     <h1>GESTION DE COMPTE ADMINISTRATEUR</h1>
@@ -387,58 +464,78 @@
         if (msg != null) { %>
     <h4><%= msg %></h4>
     <% } %>
-
     <%
-        List<Fanfaron> fanfarons = (List<Fanfaron>) request.getAttribute("fanfarons");
-        boolean hasNonActivated = false;
-        if (fanfarons != null && !fanfarons.isEmpty()) {
+        Fanfaron fanfaron = (Fanfaron) request.getAttribute("fanfaron");
+        if (fanfaron == null) {
+    %>
+    <p>Aucun utilisateur sélectionné.</p>
+    <%
+    } else {
     %>
 
-    <table>
-        <thead>
-        <tr>
-            <th>User</th>
-            <th>Valider</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-            for (Fanfaron fanfaron : fanfarons) {
-                if (!fanfaron.isActivated()) {
-                    hasNonActivated = true;
-        %>
-        <tr>
-            <td><%= fanfaron.getLogin() %></td>
-            <td>
-                <form action="UserControler" method="post" style="display:inline;">
-                    <input type="hidden" name="action" value="valider" />
-                    <input type="hidden" name="login" value="<%= fanfaron.getLogin() %>" />
-                    <button type="submit" class="btn-valider">Valider</button>
-                </form>
-            </td>
-        </tr>
-        <%      }
-        }
-            if (!hasNonActivated) {
-        %>
-        <tr>
-            <td colspan="2" class="no-users">Aucun user à valider pour le moment.</td>
-        </tr>
-        <% } %>
-        </tbody>
-    </table>
 
-    <% } else { %>
-    <p class="no-users">Aucun user à valider pour le moment.</p>
-    <% } %>
+    <div class="section">
+        <h2>Modification</h2>
+        <form action="UserControler" method="POST">
+            <input type="hidden" id="action" name="action" value="modifier_infos_users_admin" />
+
+            <label for="login">Login :</label>
+            <input type="text" id="login" name="login" value="<%= fanfaron.getLogin() %>" required/>
+
+            <label for="name">Nom :</label>
+            <input type="text" id="name" name="name" value="<%= fanfaron.getNom() %>" required/>
+
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" value="<%= fanfaron.getPrenom() %>" required/>
+
+            <label for="mail">Adresse mail :</label>
+            <input type="email" id="mail" name="mail" value="<%= fanfaron.getAdresse() %>" required/>
+
+            <label for="password">Mot de passe :</label>
+            <input type="password" id="password" name="password" />
+
+            <fieldset>
+                <legend>Genre :</legend>
+                <input type="radio" id="male" name="gender" value="homme" <%= "homme".equals(fanfaron.getGenre()) ? "checked" : "" %> required />
+                <label for="male">Homme</label>
+
+                <input type="radio" id="female" name="gender" value="femme" <%= "femme".equals(fanfaron.getGenre()) ? "checked" : "" %> />
+                <label for="female">Femme</label>
+
+                <input type="radio" id="other" name="gender" value="autre" <%= "autre".equals(fanfaron.getGenre()) ? "checked" : "" %> />
+                <label for="other">Autre</label>
+            </fieldset>
+
+            <fieldset>
+                <legend>Préférences alimentaires :</legend>
+                <input type="radio" id="none" name="preferences" value="aucune" <%= "aucune".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> required />
+                <label for="none">Aucune</label>
+
+                <input type="radio" id="vegeterian" name="preferences" value="végétarien" <%= "végétarien".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
+                <label for="vegeterian">Végétarien</label>
+
+                <input type="radio" id="vegan" name="preferences" value="végan" <%= "végan".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
+                <label for="vegan">Végan</label>
+
+                <input type="radio" id="withoutporc" name="preferences" value="sansporc" <%= "sansporc".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
+                <label for="withoutporc">Sans Porc</label>
+            </fieldset>
+
+            <button type="submit">Modifier</button>
+        </form>
+    </div>
 </div>
+<%
+    }
+%>
+
 
 <div class="footer-dark">
     <footer>
-            <p>
-                Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
-            </p>
-            <p class="copyright">Copyright © 2025</p>
+        <p>
+            Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
+        </p>
+        <p class="copyright">Copyright © 2025</p>
     </footer>
 </div>
 

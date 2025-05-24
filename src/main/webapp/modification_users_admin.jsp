@@ -243,7 +243,7 @@
             border-bottom: none;
         }
 
-        button.btn-valider {
+        button.btn-modifier {
             background: linear-gradient(45deg, #ff6a5f, #feb47b);
             border: none;
             color: #fff;
@@ -257,7 +257,7 @@
             user-select: none;
         }
 
-        button.btn-valider:hover {
+        button.btn-modifier:hover {
             box-shadow: 0 6px 25px rgba(255, 106, 95, 0.8);
             transform: scale(1.05);
         }
@@ -280,7 +280,7 @@
                 font-size: 2rem;
             }
 
-            button.btn-valider {
+            button.btn-modifier {
                 padding: 8px 16px;
                 font-size: 0.9rem;
             }
@@ -353,32 +353,32 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <ul class="primary">
-            <li><a href="page_admin.jsp">Accueil</a></li>
-            <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
-            <li>
-                <a href="#">Gérer les comptes</a>
-                <ul class="sub">
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=gerer_comptes">Nouveaux comptes</a></li>
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=modifier_comptes">Comptes existants</a></li>
-                </ul>
-            </li>
-        </ul>
-        <div class="navbar-logo">
-            <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
-        </div>
+<nav class="navbar">
+    <ul class="primary">
+        <li><a href="page_admin.jsp">Accueil</a></li>
+        <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
+        <li>
+            <a href="#">Gérer les comptes</a>
+            <ul class="sub">
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=gerer_comptes">Nouveaux comptes</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=modifier_comptes">Comptes existants</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="navbar-logo">
+        <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
+    </div>
 
-        <div class="navbar-right">
-            <div class="avatar-dropdown">
-                <img src="images/profil.png" alt="Profil" />
-                <ul class="avatar-menu">
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
-                </ul>
-            </div>
+    <div class="navbar-right">
+        <div class="avatar-dropdown">
+            <img src="images/profil.png" alt="Profil" />
+            <ul class="avatar-menu">
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
 <div class="content">
     <h1>GESTION DE COMPTE ADMINISTRATEUR</h1>
@@ -390,55 +390,50 @@
 
     <%
         List<Fanfaron> fanfarons = (List<Fanfaron>) request.getAttribute("fanfarons");
-        boolean hasNonActivated = false;
         if (fanfarons != null && !fanfarons.isEmpty()) {
     %>
-
     <table>
         <thead>
         <tr>
             <th>User</th>
-            <th>Valider</th>
+            <th>Modifier</th>
         </tr>
         </thead>
         <tbody>
         <%
             for (Fanfaron fanfaron : fanfarons) {
-                if (!fanfaron.isActivated()) {
-                    hasNonActivated = true;
         %>
         <tr>
             <td><%= fanfaron.getLogin() %></td>
             <td>
                 <form action="UserControler" method="post" style="display:inline;">
-                    <input type="hidden" name="action" value="valider" />
+                    <input type="hidden" name="action" value="modifier_admin" />
                     <input type="hidden" name="login" value="<%= fanfaron.getLogin() %>" />
-                    <button type="submit" class="btn-valider">Valider</button>
+                    <button type="submit" class="btn-modifier">Modifier</button>
                 </form>
             </td>
         </tr>
-        <%      }
-        }
-            if (!hasNonActivated) {
+        <%
+            }
         %>
-        <tr>
-            <td colspan="2" class="no-users">Aucun user à valider pour le moment.</td>
-        </tr>
-        <% } %>
         </tbody>
     </table>
+    <%
+    } else {
+    %>
+    <p class="no-users">Aucun fanfaron trouvé.</p>
+    <%
+        }
+    %>
 
-    <% } else { %>
-    <p class="no-users">Aucun user à valider pour le moment.</p>
-    <% } %>
 </div>
 
 <div class="footer-dark">
     <footer>
-            <p>
-                Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
-            </p>
-            <p class="copyright">Copyright © 2025</p>
+        <p>
+            Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
+        </p>
+        <p class="copyright">Copyright © 2025</p>
     </footer>
 </div>
 
