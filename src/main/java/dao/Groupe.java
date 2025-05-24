@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.Objects;
+
 public class Groupe {
     private int id;
     private String nom;
@@ -31,5 +33,17 @@ public class Groupe {
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Groupe groupe = (Groupe) o;
+        return id == groupe.id && Objects.equals(nom, groupe.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nom);
     }
 }

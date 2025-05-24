@@ -61,6 +61,33 @@ public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
     }
 
     @Override
+    public List<InscriptionGroupe> findAllByFanfaron(String idFanfaron) {
+        List<InscriptionGroupe> inscriptions = new ArrayList<>();
+        String query = "SELECT id_fanfaron, id_groupe FROM inscription_groupe WHERE id_fanfaron = ?";
+
+        try (Connection conn = dbManager.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, idFanfaron);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    inscriptions.add(new InscriptionGroupe(
+                            rs.getString("id_fanfaron"),
+                            rs.getInt("id_groupe")
+                    ));
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace(); // en prod, mieux vaut logger proprement
+        }
+
+        return inscriptions;
+    }
+
+
+    @Override
     public List<InscriptionGroupe> findAll() {
         List<InscriptionGroupe> inscriptions = new ArrayList<>();
         String query = "SELECT id_fanfaron, id_groupe FROM inscription_groupe";

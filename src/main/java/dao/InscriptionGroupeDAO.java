@@ -6,5 +6,6 @@ public interface InscriptionGroupeDAO {
     boolean insert(InscriptionGroupe inscriptionGroupe);
     boolean delete(String login, int groupeId);
     InscriptionGroupe find(String id);
+    List<InscriptionGroupe> findAllByFanfaron(String idFanfaron);
     List<InscriptionGroupe> findAll();
 }
