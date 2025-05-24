@@ -29,7 +29,6 @@ public class GroupeControler extends HttpServlet {
         try {
             switch (action) {
                 case null : {
-                    afficherGroupe(req, login);
                     break;
                 }
                 case "desinscription": {
@@ -41,7 +40,6 @@ public class GroupeControler extends HttpServlet {
                     } else {
                         req.setAttribute("message", "Il y a eu une erreur dans votre désinscription...");
                     }
-                    afficherGroupe(req, login);
                     break;
                 }
                 case "inscription": {
@@ -55,7 +53,6 @@ public class GroupeControler extends HttpServlet {
                     } else {
                         req.setAttribute("message", "Il y a eu une erreur dans votre inscription...");
                     }
-                    afficherGroupe(req, login);
                     break;
                 }
                 default:
@@ -67,6 +64,7 @@ public class GroupeControler extends HttpServlet {
             res.sendError(500, "Erreur serveur : " + e.getMessage());
             return;
         }
+        afficherGroupe(req, login);
         req.getRequestDispatcher(vue).forward(req, res);
     }
 
