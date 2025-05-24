@@ -29,7 +29,6 @@ public class GroupeControler extends HttpServlet {
         try {
             switch (action) {
                 case null : {
-                    afficherGroupe(req);
                     break;
                 }
                 case "desinscription": {
@@ -41,7 +40,6 @@ public class GroupeControler extends HttpServlet {
                     } else {
                         req.setAttribute("message", "Il y a eu une erreur dans votre désinscription...");
                     }
-                    afficherGroupe(req);
                     break;
                 }
                 case "inscription": {
@@ -55,7 +53,6 @@ public class GroupeControler extends HttpServlet {
                     } else {
                         req.setAttribute("message", "Il y a eu une erreur dans votre inscription...");
                     }
-                    afficherGroupe(req);
                     break;
                 }
                 default:
@@ -67,19 +64,23 @@ public class GroupeControler extends HttpServlet {
             res.sendError(500, "Erreur serveur : " + e.getMessage());
             return;
         }
+        afficherGroupe(req, login);
         req.getRequestDispatcher(vue).forward(req, res);
     }
 
-    private void afficherGroupe(HttpServletRequest req) {
+    private void afficherGroupe(HttpServletRequest req, String login) {
         GroupeDAO groupeDAO = DAOFactory.getGroupeDAO();
         List<Groupe> groupes = groupeDAO.findAll();
-        req.setAttribute("groupes", groupes);
         InscriptionGroupeDAO inscDAO = DAOFactory.getInscriptionGroupeDAO();
-        List<InscriptionGroupe> inscGroupes = inscDAO.findAll();
+        System.out.println(login);
+        List<InscriptionGroupe> inscGroupes = inscDAO.findAllByFanfaron(login);
         List<Groupe> inscGroupeList = new ArrayList<>();
         for (InscriptionGroupe inscGroupe : inscGroupes) {
-            inscGroupeList.add(groupeDAO.find(inscGroupe.getIdGroupe()));
+            Groupe groupe = groupeDAO.find(inscGroupe.getIdGroupe());
+            inscGroupeList.add(groupe);
+            groupes.remove(groupe);
         }
+        req.setAttribute("groupes", groupes);
         req.setAttribute("inscGroupes", inscGroupeList);
     }
 }

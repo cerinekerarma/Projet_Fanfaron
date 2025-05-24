@@ -4,21 +4,21 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
+public class InscriptionPupitreJDBCDAO implements InscriptionPupitreDAO {
 
     private final DbConnectionManager dbManager;
 
-    public InscriptionGroupeJDBCDAO(DbConnectionManager dbManager) {
+    public InscriptionPupitreJDBCDAO(DbConnectionManager dbManager) {
         this.dbManager = dbManager;
     }
 
     @Override
-    public boolean insert(InscriptionGroupe inscriptionGroupe) {
-        String query = "INSERT INTO inscription_groupe (id_fanfaron, id_groupe) VALUES (?, ?) RETURNING id_fanfaron";
+    public boolean insert(InscriptionPupitre inscriptionPupitre) {
+        String query = "INSERT INTO inscription_pupitre (id_fanfaron, id_pupitre) VALUES (?, ?) RETURNING id_fanfaron";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-            stmt.setString(1, inscriptionGroupe.getIdFanfaron());
-            stmt.setInt(2, inscriptionGroupe.getIdGroupe());
+            stmt.setString(1, inscriptionPupitre.getIdFanfaron());
+            stmt.setInt(2, inscriptionPupitre.getIdPupitre());
 
             ResultSet rs = stmt.executeQuery();
             return rs.next();
@@ -29,12 +29,12 @@ public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
     }
 
     @Override
-    public boolean delete(String login, int groupeId) {
-        String query = "DELETE FROM inscription_groupe WHERE id_fanfaron = ? and id_groupe = ?";
+    public boolean delete(String login, int pupitreId) {
+        String query = "DELETE FROM inscription_pupitre WHERE id_fanfaron = ? AND id_pupitre = ?";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, login);
-            stmt.setInt(2, groupeId);
+            stmt.setInt(2, pupitreId);
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -43,15 +43,18 @@ public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
     }
 
     @Override
-    public InscriptionGroupe find(String idFanfaron) {
-        String query = "SELECT id_fanfaron, id_groupe FROM inscription_groupe WHERE id_fanfaron = ?";
+    public InscriptionPupitre find(String idFanfaron) {
+        String query = "SELECT id_fanfaron, id_pupitre FROM inscription_pupitre WHERE id_fanfaron = ?";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, idFanfaron);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return new InscriptionGroupe(rs.getString("id_fanfaron"), rs.getInt("id_groupe"));
+                    return new InscriptionPupitre(
+                            rs.getString("id_fanfaron"),
+                            rs.getInt("id_pupitre")
+                    );
                 }
             }
         } catch (SQLException e) {
@@ -61,43 +64,37 @@ public class InscriptionGroupeJDBCDAO implements InscriptionGroupeDAO {
     }
 
     @Override
-    public List<InscriptionGroupe> findAllByFanfaron(String idFanfaron) {
-        List<InscriptionGroupe> inscriptions = new ArrayList<>();
-        String query = "SELECT id_fanfaron, id_groupe FROM inscription_groupe WHERE id_fanfaron = ?";
-
+    public List<InscriptionPupitre> findAllByFanfaron(String idFanfaron) {
+        List<InscriptionPupitre> inscriptions = new ArrayList<>();
+        String query = "SELECT id_fanfaron, id_pupitre FROM inscription_pupitre WHERE id_fanfaron = ?";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
-
             stmt.setString(1, idFanfaron);
-
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    inscriptions.add(new InscriptionGroupe(
+                    inscriptions.add(new InscriptionPupitre(
                             rs.getString("id_fanfaron"),
-                            rs.getInt("id_groupe")
+                            rs.getInt("id_pupitre")
                     ));
                 }
             }
-
         } catch (SQLException e) {
-            e.printStackTrace(); // en prod, mieux vaut logger proprement
+            e.printStackTrace();
         }
-
         return inscriptions;
     }
 
-
     @Override
-    public List<InscriptionGroupe> findAll() {
-        List<InscriptionGroupe> inscriptions = new ArrayList<>();
-        String query = "SELECT id_fanfaron, id_groupe FROM inscription_groupe";
+    public List<InscriptionPupitre> findAll() {
+        List<InscriptionPupitre> inscriptions = new ArrayList<>();
+        String query = "SELECT id_fanfaron, id_pupitre FROM inscription_pupitre";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
-                inscriptions.add(new InscriptionGroupe(
+                inscriptions.add(new InscriptionPupitre(
                         rs.getString("id_fanfaron"),
-                        rs.getInt("id_groupe")
+                        rs.getInt("id_pupitre")
                 ));
             }
         } catch (SQLException e) {

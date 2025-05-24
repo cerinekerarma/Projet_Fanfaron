@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.Objects;
+
 public class Pupitre {
     private int id;
     private String nom;
@@ -31,5 +33,17 @@ public class Pupitre {
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Pupitre pupitre = (Pupitre) o;
+        return id == pupitre.id && Objects.equals(nom, pupitre.nom);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nom);
     }
 }

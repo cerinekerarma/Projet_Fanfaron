@@ -13,7 +13,11 @@ public class DAOFactory{
     public static InscriptionGroupeDAO getInscriptionGroupeDAO(){
         return new InscriptionGroupeJDBCDAO(dbManager);
     }
-
-    //TODO Mettre les DAO la dedans
+    public static PupitreDAO getPupitreDAO(){
+        return new PupitreJDBCDAO(dbManager);
+    }
+    public static InscriptionPupitreDAO getInscriptionPupitreDAO(){
+        return new InscriptionPupitreJDBCDAO(dbManager);
+    }
 
 }
