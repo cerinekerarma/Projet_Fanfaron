@@ -87,6 +87,12 @@
             opacity: 0.9;
         }
 
+        .navbar-logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
 
         button[type="submit"],
         button[type="button"].btn {
@@ -190,6 +196,10 @@
 
         </head>
 <body>
+<div class="navbar-logo">
+    <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
+</div>
+
 <div class="conteneur">
     <% if (session.getAttribute("user") != null) { %>
     <jsp:forward page="acceuil.jsp" />

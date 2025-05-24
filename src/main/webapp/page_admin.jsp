@@ -19,6 +19,9 @@
             padding: 0;
             font-family: var(--font-main);
             background: url('${pageContext.request.contextPath}/images/instruments.png') top center repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .conteneur {
@@ -29,6 +32,7 @@
             border-radius: 16px;
             box-shadow: 0 12px 30px rgba(255, 115, 39, 0.8);
             color: var(--sunset-deep);
+            flex: 1;
             background-blend-mode: overlay;
         }
 
@@ -114,6 +118,21 @@
             position: relative;
         }
 
+        .navbar-logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+        }
+
+        .avatar-dropdown {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+
         .avatar-dropdown img {
             height: 40px;
             width: 40px;
@@ -125,11 +144,15 @@
         .avatar-menu {
             display: none;
             position: absolute;
-            right: 2em;
+            top: 100%;
+            left: 0;
             background-color: var(--sunset-orange);
             border-radius: 8px;
             list-style: none;
             padding: 0.5em 0;
+            margin-top: 0;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1000;
         }
         .avatar-dropdown:hover .avatar-menu {
             display: block;
@@ -161,11 +184,11 @@
             color: white;
             text-align: center;
             padding: 30px 20px;
-            margin-top: 60px;
             border-top: 5px solid #ffb3b3;
             font-family: var(--font-main);
             border-radius: 20px 20px 0 0;
         }
+
         .footer-dark a {
             color: var(--sunset-light);
         }
@@ -205,6 +228,11 @@
         </li>
     </ul>
 
+    <div class="navbar-logo">
+        <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
+    </div>
+
+
     <div class="avatar-dropdown" style="display: flex; align-items: center; gap: 10px;">
         <img src="images/profil.png" alt="Profil" style="height: 40px; width: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
         <ul class="avatar-menu">
@@ -238,7 +266,7 @@
     </footer>
 </div>
 
-=<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 
 </body>
