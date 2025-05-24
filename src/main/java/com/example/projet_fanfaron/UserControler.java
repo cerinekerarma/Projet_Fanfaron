@@ -52,15 +52,15 @@ public class UserControler extends HttpServlet {
 
 
                     HttpSession session = req.getSession(true);
+                    session.setAttribute("user", fanfaron);
 
-                    if(!fanfaron.isAdmin()){
-                        session.setAttribute("user", fanfaron);
-                        System.out.println("Tentative de connexion reussi pour: login=" + login + ", password=" + password);
+                    if (!fanfaron.isAdmin()) {
+                        System.out.println("Tentative de connexion reussie pour: login=" + login + ", password=" + password);
                         vue = "acceuil.jsp";
-                    }
-                    else{
+                    } else {
                         vue = "page_admin.jsp";
                     }
+
                     break;
                 }
 
@@ -190,11 +190,11 @@ public class UserControler extends HttpServlet {
                     Fanfaron currentUser = (Fanfaron) session.getAttribute("user");
 
                     if (currentUser == null || !currentUser.isAdmin()) {
-                        System.out.println("le current user dans modif user admin est "+currentUser.getLogin());
                         vue = "connexion.jsp";
                         break;
                     }
 
+                    String ancienLogin = req.getParameter("ancienLogin");
                     String login = req.getParameter("login");
                     String nom = req.getParameter("name");
                     String prenom = req.getParameter("prenom");
@@ -206,22 +206,30 @@ public class UserControler extends HttpServlet {
                     FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
 
                     Fanfaron existing = fanfaronDAO.find(login);
-                    if (existing == null) {
-                        req.setAttribute("message", "Utilisateur introuvable.");
+                    if (existing != null && !login.equals(ancienLogin)) {
+                        req.setAttribute("message", "Veuillez saisir un autre login, login déjà existant.");
+                        req.setAttribute("fanfaron", fanfaronDAO.find(ancienLogin));
+                        vue = "infos_user_admin_modifier.jsp";
+                        break;
+                    }
+
+                    Fanfaron ancienFanfaron = fanfaronDAO.find(ancienLogin);
+                    if (ancienFanfaron == null) {
+                        req.setAttribute("message", "Utilisateur non trouvé.");
                         vue = "modification_users_admin.jsp";
                         break;
                     }
 
                     if (password == null || password.trim().isEmpty()) {
-                        password = existing.getMdp();
+                        password = ancienFanfaron.getMdp();
                     }
 
                     Fanfaron updatedFanfaron = new Fanfaron(
                             login, nom, prenom, mail, genre, password, preferences,
-                            existing.getDerniereConnection(),
-                            existing.getDateCreation(),
-                            existing.isAdmin(),
-                            existing.isActivated()
+                            ancienFanfaron.getDerniereConnection(),
+                            ancienFanfaron.getDateCreation(),
+                            ancienFanfaron.isAdmin(),
+                            ancienFanfaron.isActivated()
                     );
 
                     boolean updated = fanfaronDAO.update(updatedFanfaron);
@@ -233,9 +241,13 @@ public class UserControler extends HttpServlet {
                         req.setAttribute("message", "Informations modifiées avec succès.");
                         List<Fanfaron> listeFanfarons = fanfaronDAO.findAll();
                         req.setAttribute("fanfarons", listeFanfarons);
-
                         vue = "modification_users_admin.jsp";
                     }
+
+                    break;
+                }
+                case "versAcceuilUser":{
+                    vue = "acceuil.jsp";
                     break;
                 }
                 case "valider": {
@@ -299,6 +311,25 @@ public class UserControler extends HttpServlet {
                     vue = "formulaire.jsp";
                     break;
                 }
+                case "suppression_par_admin": {
+                    String loginToDelete = req.getParameter("login");
+                    FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+
+                    boolean deleted = fanfaronDAO.delete(loginToDelete);
+
+                    if (deleted) {
+                        req.setAttribute("message", "Utilisateur " + loginToDelete + " supprimé avec succès.");
+                    } else {
+                        req.setAttribute("message", "Erreur lors de la suppression de l'utilisateur " + loginToDelete + ".");
+                    }
+
+                    List<Fanfaron> fanfarons = fanfaronDAO.findAll();
+                    req.setAttribute("fanfarons", fanfarons);
+
+                    vue = "modification_users_admin.jsp";
+                    break;
+                }
+
                 default:
                     vue = "connexion.jsp";
                     res.sendError(404, "Action non supportée");

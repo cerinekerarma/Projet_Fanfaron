@@ -243,6 +243,17 @@
             border-bottom: none;
         }
 
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+            table-layout: fixed;
+        }
+
+        thead tr th, tbody tr td {
+            width: 50%;
+        }
+
         button.btn-modifier {
             background: linear-gradient(45deg, #ff6a5f, #feb47b);
             border: none;
@@ -397,11 +408,13 @@
         <tr>
             <th>User</th>
             <th>Modifier</th>
+            <th>Supprimer</th>
         </tr>
         </thead>
         <tbody>
         <%
             for (Fanfaron fanfaron : fanfarons) {
+                if(!fanfaron.isAdmin() && fanfaron.isActivated()){
         %>
         <tr>
             <td><%= fanfaron.getLogin() %></td>
@@ -412,7 +425,19 @@
                     <button type="submit" class="btn-modifier">Modifier</button>
                 </form>
             </td>
+            <td>
+                <form action="UserControler" method="post" style="display:inline;">
+                    <input type="hidden" name="action" value="suppression_par_admin" />
+                    <input type="hidden" name="login" value="<%= fanfaron.getLogin() %>" />
+                    <button type="submit" class="btn-modifier" onclick="document.getElementById('action').value='suppression_par_admin'">Supprimer</button>
+                </form>
+            </td>
+
         </tr>
+        <%
+            }
+        %>
+
         <%
             }
         %>
