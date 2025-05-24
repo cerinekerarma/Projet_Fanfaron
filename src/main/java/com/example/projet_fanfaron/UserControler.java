@@ -208,15 +208,6 @@ public class UserControler extends HttpServlet {
                     afficherFanfarons(req, res);
                     return;
                 }
-                case "refuser": {
-                    String login = req.getParameter("fanfaronID");
-                    FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
-                    Fanfaron f = fanfaronDAO.find(login);
-
-                    afficherFanfarons(req, res);
-                    return;
-                }
-
                 case "suppression": {
                     HttpSession session = req.getSession(false);
                     if (session != null) {

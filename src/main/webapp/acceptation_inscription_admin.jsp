@@ -167,21 +167,6 @@
             background-color: #218838;
         }
 
-        .btn-refuser {
-            background-color: #dc3545;
-            border: none;
-            color: white;
-            font-weight: bold;
-            padding: 8px 16px;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
-        }
-
-        .btn-refuser:hover {
-            background-color: #ac2a37;
-        }
-
     </style>
 
 </head>
@@ -226,7 +211,6 @@
         <tr>
             <th>User</th>
             <th>Valider</th>
-            <th>Refuser</th>
         </tr>
         </thead>
         <tbody>
@@ -242,13 +226,6 @@
                     <input type="hidden" name="action" value="valider" />
                     <input type="hidden" name="fanfaronID" value="<%= fanfaron.getLogin() %>" />
                     <button type="submit" class="btn-valider" onclick="document.getElementById('action').value='valider'">Valider</button>
-                </form>
-            </td>
-            <td>
-                <form action="UserControler" method="post" style="display:inline;">
-                    <input type="hidden" name="action" value="refuser" />
-                    <input type="hidden" name="fanfaronID" value="<%= fanfaron.getLogin() %>" />
-                    <button type="submit" class="btn-refuser" onclick="document.getElementById('action').value='refuser'">Refuser</button>
                 </form>
             </td>
         </tr>
