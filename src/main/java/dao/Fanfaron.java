@@ -128,7 +128,7 @@ public class Fanfaron {
                 ", prenom='" + prenom + '\'' +
                 ", adresse='" + adresse + '\'' +
                 ", genre='" + genre + '\'' +
-                ", mdp='******'" +
+                ", mdp='" + mdp + '\'' +
                 ", crtAlimentaire='" + crtAlimentaire + '\'' +
                 ", derniereConnection=" + derniereConnection + '\'' +
                 ", dateCreation=" + dateCreation + '\'' +

@@ -120,8 +120,8 @@
 
         .navbar-logo {
             position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+            left: 90%;
+            /*transform: translateX(-50%);*/
             pointer-events: none;
         }
 
@@ -141,7 +141,6 @@
             cursor: pointer;
             margin-right: 150px;
         }
-
         .avatar-menu {
             display: none;
             position: absolute;
@@ -220,34 +219,20 @@
             border-radius: 8px;
         }
     </style>
-</head>
-<body>
 
+
+</head>
+
+<body>
 <nav class="navbar">
     <ul class="primary">
-        <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilAdmin">Accueil</a></li>
-        <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
-        <li>
-            <a href="#">Gérer les comptes</a>
-            <ul class="sub">
-                <li><a href="${pageContext.request.contextPath}/UserControler?action=gerer_comptes">Nouveaux comptes</a></li>
-                <li><a href="${pageContext.request.contextPath}/UserControler?action=modifier_comptes">Comptes existants</a></li>
-            </ul>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/UserControler?action=versAjoutUserAdmin">Ajouter un user</a></li>
+        <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Connexion</a></li>
+        <li><a href="${pageContext.request.contextPath}/UserControler?action=versInscription">Inscription</a></li>
     </ul>
+
 
     <div class="navbar-logo">
         <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
-    </div>
-
-
-    <div class="avatar-dropdown" style="display: flex; align-items: center; gap: 10px;">
-        <img src="images/profil.png" alt="Profil" style="height: 40px; width: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
-        <ul class="avatar-menu">
-            <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil_admin">Profil</a></li>
-            <li><a href="${pageContext.request.contextPath}/UserControler?action=deconnexion">Déconnexion</a></li>
-        </ul>
     </div>
 </nav>
 

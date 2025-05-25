@@ -131,8 +131,9 @@
             border-radius: 50%;
             border: 2px solid white;
             cursor: pointer;
-            margin-right: 100px;
+            margin-right: 150px;
         }
+
         .avatar-menu {
             display: none;
             position: absolute;
@@ -449,7 +450,7 @@
     <div class="avatar-dropdown" style="display: flex; align-items: center; gap: 10px;">
         <img src="images/profil.png" alt="Profil" style="height: 40px; width: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
         <ul class="avatar-menu">
-            <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
+            <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil_admin">Profil</a></li>
             <li><a href="${pageContext.request.contextPath}/UserControler?action=deconnexion">Déconnexion</a></li>
         </ul>
     </div>
@@ -495,13 +496,13 @@
 
             <fieldset>
                 <legend>Genre :</legend>
-                <input type="radio" id="male" name="gender" value="homme" <%= "Homme".equals(fanfaron.getGenre()) ? "checked" : "" %> required />
+                <input type="radio" id="male" name="gender" value="homme" <%= "homme".equals(fanfaron.getGenre()) ? "checked" : "" %> required />
                 <label for="male">Homme</label>
 
-                <input type="radio" id="female" name="gender" value="femme" <%= "Femme".equals(fanfaron.getGenre()) ? "checked" : "" %> />
+                <input type="radio" id="female" name="gender" value="femme" <%= "femme".equals(fanfaron.getGenre()) ? "checked" : "" %> />
                 <label for="female">Femme</label>
 
-                <input type="radio" id="other" name="gender" value="autre" <%= "Autre".equals(fanfaron.getGenre()) ? "checked" : "" %> />
+                <input type="radio" id="other" name="gender" value="autre" <%= "autre".equals(fanfaron.getGenre()) ? "checked" : "" %> />
                 <label for="other">Autre</label>
             </fieldset>
 
@@ -510,13 +511,13 @@
                 <input type="radio" id="none" name="preferences" value="aucune" <%= "aucune".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> required />
                 <label for="none">Aucune</label>
 
-                <input type="radio" id="vegeterian" name="preferences" value="végétarien" <%= "Végétarien".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
+                <input type="radio" id="vegeterian" name="preferences" value="végétarien" <%= "végétarien".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
                 <label for="vegeterian">Végétarien</label>
 
-                <input type="radio" id="vegan" name="preferences" value="végan" <%= "Végan".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
+                <input type="radio" id="vegan" name="preferences" value="végan" <%= "végan".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
                 <label for="vegan">Végan</label>
 
-                <input type="radio" id="withoutporc" name="preferences" value="sansporc" <%= "Sans Porc".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
+                <input type="radio" id="withoutporc" name="preferences" value="sansporc" <%= "sansporc".equals(fanfaron.getCrtAlimentaire()) ? "checked" : "" %> />
                 <label for="withoutporc">Sans Porc</label>
             </fieldset>
 

@@ -137,8 +137,9 @@
             border-radius: 50%;
             border: 2px solid white;
             cursor: pointer;
-            margin-right: 100px;
+            margin-right: 150px;
         }
+
         .avatar-menu {
             display: none;
             position: absolute;
@@ -265,6 +266,41 @@
             font-weight: bold;
         }
 
+        .footer-dark {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-deep));
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #ffb3b3;
+            font-family: var(--font-main);
+            border-radius: 20px 20px 0 0;
+        }
+
+        .footer-dark a {
+            color: var(--sunset-light);
+        }
+        .footer-dark a:hover {
+            color: white;
+        }
+        .footer-dark .copyright {
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
+
+        ::selection {
+            background: var(--sunset-light);
+            color: var(--sunset-hover);
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--sunset-orange), var(--sunset-deep));
+            border-radius: 8px;
+        }
+
+
+
 
     </style>
 
@@ -343,7 +379,7 @@
 <div style="text-align: center;">
     <a href="${pageContext.request.contextPath}/UserControler?action=modifier_profil">Modifier</a>
 </div>
-<div style="text-align: center;">
+<div style="text-align: center; margin-bottom: 35px;" >
     <a href="${pageContext.request.contextPath}/UserControler?action=suppression"
        onclick="return confirm('Confirmer la suppression du compte');">
         Supprimer le compte
@@ -358,6 +394,16 @@
 <%
     }
 %>
+
+<div class="footer-dark">
+    <footer>
+        <p>
+            Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
+        </p>
+        <p class="copyright">Copyright © 2025</p>
+    </footer>
+</div>
+
 
 </body>
 </html>

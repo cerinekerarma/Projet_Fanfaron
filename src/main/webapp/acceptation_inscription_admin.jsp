@@ -132,7 +132,7 @@
             border-radius: 50%;
             border: 2px solid white;
             cursor: pointer;
-            margin-right: 100px;
+            margin-right: 150px;
         }
         .avatar-menu {
             display: none;
@@ -355,7 +355,7 @@
 
     <nav class="navbar">
         <ul class="primary">
-            <li><a href="page_admin.jsp">Accueil</a></li>
+            <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilAdmin">Accueil</a></li>
             <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
             <li>
                 <a href="#">Gérer les comptes</a>
@@ -364,6 +364,7 @@
                     <li><a href="${pageContext.request.contextPath}/UserControler?action=modifier_comptes">Comptes existants</a></li>
                 </ul>
             </li>
+            <li><a href="${pageContext.request.contextPath}/UserControler?action=versAjoutUserAdmin">Ajouter un user</a></li>
         </ul>
         <div class="navbar-logo">
             <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
@@ -373,7 +374,7 @@
             <div class="avatar-dropdown">
                 <img src="images/profil.png" alt="Profil" />
                 <ul class="avatar-menu">
-                    <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
+                    <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil_admin">Profil</a></li>
                     <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
                 </ul>
             </div>
@@ -411,8 +412,8 @@
             <td><%= fanfaron.getLogin() %></td>
             <td>
                 <form action="UserControler" method="post" style="display:inline;">
-                    <input type="hidden" name="action" value="valider" />
                     <input type="hidden" name="login" value="<%= fanfaron.getLogin() %>" />
+                    <input type="hidden" name="action" value="valider" />
                     <button type="submit" class="btn-valider">Valider</button>
                 </form>
             </td>
