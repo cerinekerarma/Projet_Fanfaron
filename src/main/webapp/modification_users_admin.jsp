@@ -432,7 +432,7 @@
                 <form action="UserControler" method="post" style="display:inline;">
                     <input type="hidden" name="action" value="suppression_par_admin" />
                     <input type="hidden" name="login" value="<%= fanfaron.getLogin() %>" />
-                    <button type="submit" class="btn-modifier" onclick="document.getElementById('action').value='suppression_par_admin'">Supprimer</button>
+                    <button type="submit" class="btn-modifier" onclick="if(confirm('Confirmer la suppression du compte')) { document.getElementById('action').value='suppression_par_admin'; return true; } else { return false; }">Supprimer</button>
                 </form>
             </td>
 
