@@ -1,11 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="java.util.List" %>
+<%@ page import="dao.Evenement" %>
+<%@ page import="dao.Pupitre" %>
 <%@ page import="dao.Fanfaron" %>
-<!DOCTYPE html>
-<html lang="fr">
-
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<html>
 <head>
-    <meta charset="UTF-8" />
-    <title>Créer un évènement</title>
+    <title>Modification de l'évènement</title>
     <style>
         :root {
             --sunset-orange: #e4572e;
@@ -14,6 +15,16 @@
             --sunset-bg: #fff3f0;
             --sunset-light: #ffd3b6;
             --font-main: 'Georgia', serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-main);
+            background: url('${pageContext.request.contextPath}/images/instruments.png') top center repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .conteneur {
@@ -80,31 +91,6 @@
         nav.navbar ul.primary > li > a:hover {
             color: var(--sunset-light);
         }
-        form label {
-            display: block;
-            margin: 12px 0 6px;
-            font-weight: bold;
-            color: #a63d1a;
-        }
-
-        form input[type="text"],
-        form input[type="datetime-local"],
-        form input[type="number"]{
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d08662;
-            background-color: rgba(255, 248, 240, 0.9);
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-            transition: border-color 0.3s ease;
-        }
-
-        form input:focus {
-            border-color: #ff6f3c;
-            outline: none;
-        }
-
 
         nav.navbar ul.sub {
             display: none;
@@ -158,7 +144,6 @@
             cursor: pointer;
             margin-right: 150px;
         }
-
         .avatar-menu {
             display: none;
             position: absolute;
@@ -206,6 +191,13 @@
             font-family: var(--font-main);
             border-radius: 20px 20px 0 0;
         }
+        .footer-dark p {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            color: white;
+        }
+
 
         .footer-dark a {
             color: var(--sunset-light);
@@ -230,6 +222,33 @@
             border-radius: 8px;
         }
 
+
+        .footer-dark {
+            background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-deep));
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            border-top: 5px solid #ffb3b3;
+            font-family: var(--font-main);
+            border-radius: 20px 20px 0 0;
+        }
+        .footer-dark p {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            color: white;
+        }
+
+        .footer-dark a {
+            color: var(--sunset-light);
+        }
+        .footer-dark a:hover {
+            color: white;
+        }
+        .footer-dark .copyright {
+            font-size: 0.85em;
+            margin-top: 10px;
+        }
         table {
             width: 100%;
             border-collapse: separate;
@@ -268,7 +287,23 @@
             border-bottom: none;
         }
 
-        button.btn-modifier {
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 12px;
+            table-layout: fixed;
+        }
+
+        thead tr th, tbody tr td {
+            width: 50%;
+        }
+
+        button.btn-valider {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+        button.btn-valider {
             background: linear-gradient(45deg, #ff6a5f, #feb47b);
             border: none;
             color: #fff;
@@ -282,68 +317,72 @@
             user-select: none;
         }
 
-        button.btn-modifier:hover {
+        button.btn-valider:hover {
             box-shadow: 0 6px 25px rgba(255, 106, 95, 0.8);
             transform: scale(1.05);
         }
 
-        p.no-users {
-            text-align: center;
-            font-size: 1.15rem;
-            color: #a94b46;
-            margin-top: 2rem;
-            font-weight: 600;
-            font-style: italic;
-        }
-
-        @media (max-width: 600px) {
-            nav.navbar ul.primary {
-                gap: 1rem;
-            }
-
-            h1 {
-                font-size: 2rem;
-            }
-
-            button.btn-modifier {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
-
-            .content {
-                margin: 1rem;
-                padding: 1.2rem;
-            }
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: var(--font-main);
-            background: url('${pageContext.request.contextPath}/images/instruments.png') top center repeat;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .conteneur {
-            max-width: 1500px;
-            margin: 100px auto 40px;
-            background: url('${pageContext.request.contextPath}/images/sunset.jpeg') center/cover no-repeat;
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: 0 12px 30px rgba(255, 115, 39, 0.8);
+        select {
+            background-color: var(--sunset-bg);
             color: var(--sunset-deep);
-            flex: 1;
-            background-blend-mode: overlay;
+            border: 2px solid var(--sunset-orange);
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-family: var(--font-main);
+            font-size: 1rem;
+            box-shadow: 0 4px 10px rgba(255, 115, 39, 0.3);
+            transition: box-shadow 0.3s ease;
         }
 
-        .content {
-            padding: 2em;
-            flex: 1 0 auto;
-            padding-top: 80px;
+        select:hover {
+            box-shadow: 0 6px 16px rgba(255, 115, 39, 0.5);
         }
 
+        select:focus {
+            outline: none;
+            border-color: var(--sunset-hover);
+            box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.3);
+        }
+
+        form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d08662;
+            background-color: rgba(255, 248, 240, 0.9);
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
+            resize: vertical;
+            transition: border-color 0.3s ease;
+        }
+
+        form textarea:focus {
+            border-color: #ff6f3c;
+            outline: none;
+        }
+
+        form textarea::placeholder {
+            color: rgba(255, 161, 114, 0.8);
+            font-style: italic;
+            letter-spacing: 0.5px;
+            opacity: 0.9;
+        }
+
+        form input[type="datetime-local"]::before {
+            content: attr(placeholder);
+            color: rgba(255, 161, 114, 0.8);
+            font-style: italic;
+            position: absolute;
+            margin-left: 12px;
+            line-height: 38px;
+            pointer-events: none;
+            opacity: 0.9;
+        }
+
+        form input[type="datetime-local"]:focus::before,
+        form input[type="datetime-local"]:valid::before {
+            content: "";
+        }
         form label {
             display: block;
             margin: 12px 0 6px;
@@ -390,111 +429,36 @@
             opacity: 0.9;
         }
 
-
-
-        button[type="submit"],
-        button[type="button"].btn {
-            margin-top: 20px;
-            width: 100%;
-            padding: 12px;
-            background-color: #e4572e;
-            color: white;
+        button.btn-valider {
+            background: linear-gradient(45deg, #ff6a5f, #feb47b);
             border: none;
-            font-size: 16px;
-            border-radius: 6px;
+            color: #fff;
+            padding: 10px 22px;
+            font-weight: 700;
+            border-radius: 30px;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            box-shadow: 0 4px 15px rgba(254, 180, 123, 0.6);
+            transition: box-shadow 0.3s ease, transform 0.2s ease;
+            font-size: 1rem;
+            user-select: none;
         }
 
-        button[type="submit"]:hover,
-        button[type="button"].btn:hover {
-            background-color: #b63e18;
+        button.btn-valider:hover {
+            box-shadow: 0 6px 25px rgba(255, 106, 95, 0.8);
+            transform: scale(1.05);
         }
 
-        a {
-            color: #b63e18;
-            font-weight: bold;
-            text-decoration: underline;
-        }
-
-        a:hover {
-            color: #812d11;
+        button.btn-valider {
+            padding: 8px 16px;
+            font-size: 0.9rem;
         }
 
 
-        .footer-dark {
-            background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-deep));
-            color: white;
-            text-align: center;
-            padding: 30px 20px;
-            border-top: 5px solid #ffb3b3;
-            font-family: var(--font-main);
-            border-radius: 20px 20px 0 0;
-            flex-shrink: 0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 12px;
-            table-layout: fixed;
-        }
-
-        thead tr th, tbody tr td {
-            width: 50%;
-        }
-
-        .footer-dark p {
-            background-color: transparent;
-            padding: 0;
-            margin: 0;
-            color: white;
-        }
-
-        form textarea {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #d08662;
-            background-color: rgba(255, 248, 240, 0.9);
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-            resize: vertical;
-            transition: border-color 0.3s ease;
-        }
-
-        form textarea:focus {
-            border-color: #ff6f3c;
-            outline: none;
-        }
-
-        form textarea::placeholder {
-            color: rgba(255, 161, 114, 0.8);
-            font-style: italic;
-            letter-spacing: 0.5px;
-            opacity: 0.9;
-        }
-
-        form input[type="datetime-local"]::before {
-            content: attr(placeholder);
-            color: rgba(255, 161, 114, 0.8);
-            font-style: italic;
-            position: absolute;
-            margin-left: 12px;
-            line-height: 38px;
-            pointer-events: none;
-            opacity: 0.9;
-        }
-
-        form input[type="datetime-local"]:focus::before,
-        form input[type="datetime-local"]:valid::before {
-            content: "";
-        }
 
     </style>
 </head>
-
 <body>
+
 <nav class="navbar">
     <ul class="primary">
         <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilUser">Accueil</a></li>
@@ -514,6 +478,7 @@
                 <li><a href="${pageContext.request.contextPath}/EvenementControler?action=vers_evenements_inscrits">Inscrits</a></li>
             </ul>
         </li>
+
     </ul>
 
     <div class="navbar-logo">
@@ -524,7 +489,7 @@
     <div class="avatar-dropdown" style="display: flex; align-items: center; gap: 10px;">
         <img src="images/profil.png" alt="Profil" style="height: 40px; width: 40px; border-radius: 50%; border: 2px solid white; cursor: pointer;">
         <ul class="avatar-menu">
-            <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil_admin">Profil</a></li>
+            <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
             <li><a href="${pageContext.request.contextPath}/UserControler?action=deconnexion">Déconnexion</a></li>
         </ul>
     </div>
@@ -540,11 +505,18 @@
     <a href="UserControler?action=versConnexion">Connectez-vous</a>
     <%
     } else {
+        Evenement event = (Evenement) request.getAttribute("event");
+        if (event == null) {
+    %>
+    <p>Aucun événement sélectionné.</p>
+    <%
+    } else {
     %>
     <div class="section">
-        <h2>Créer un évènement</h2>
+        <h2>Modifier l'évènement</h2>
         <form action="EvenementControler" method="POST">
-            <input type="hidden" name="action" value="ajouter_evenement" />
+            <input type="hidden" name="action" value="modifier_evenement" />
+            <input type="hidden" name="id" value="<%= event.getId() %>" />
 
             <%
                 String msg = (String) request.getAttribute("message");
@@ -554,36 +526,41 @@
             <% } %>
 
             <label for="nom">Nom de l'événement :</label>
-            <input type="text" id="nom" name="nom" placeholder="Entrez le nom de l'événement" required />
+            <input type="text" id="nom" name="nom" value="<%= event.getNom() %>" required />
 
             <label for="date">Date et heure :</label>
-            <input type="datetime-local" id="date" name="date" required />
+            <input type="datetime-local" id="date" name="date"
+                   value="<%= event.getDate().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME).replace("T", "T") %>"
+                   required />
 
             <label for="duree">Durée (en minutes) :</label>
-            <input type="number" id="duree" name="duree" placeholder="Ex: 90" min="30" required />
+            <input type="number" id="duree" name="duree" value="<%= event.getDuree() %>" min="30" required />
 
             <label for="lieu">Lieu :</label>
-            <input type="text" id="lieu" name="lieu" placeholder="Ex: 1 rue Polytech Lyon 69100 Villeurbanne ou Polytech Lyon" required />
+            <input type="text" id="lieu" name="lieu" value="<%= event.getLieu() %>" required />
 
             <label for="description">Description :</label>
-            <textarea id="description" name="description" rows="4" placeholder="Décrivez l'événement ici..." required></textarea>
+            <textarea id="description" name="description" rows="4" required><%= event.getDescription() %></textarea>
 
-            <button type="submit" onclick="window.location.href='${pageContext.request.contextPath}/EvenementControler?action=ajouter_evenement'">Créer l'événement</button>
+            <button type="submit" class="btn-valider">Modifier</button>
         </form>
     </div>
-    <% } %>
+    <%
+            }
+        }
+    %>
 </div>
+
 <div class="footer-dark">
     <footer>
-        <div class="container">
-            <p>
-                Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
-            </p>
-            <p class="copyright">Copyright © 2025</p>
-        </div>
+        <p>
+            Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
+        </p>
+        <p class="copyright">Copyright © 2025</p>
     </footer>
 </div>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

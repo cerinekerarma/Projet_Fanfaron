@@ -9,8 +9,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,11 +52,54 @@ public class EvenementControler extends HttpServlet {
                     break;
                 }
                 case "vers_modifier_event":{
-                    vue = "modifier_event.jsp";
+                    String eventIDStr = req.getParameter("eventID");
+                    if (eventIDStr != null) {
+                        int eventID = Integer.parseInt(eventIDStr);
+                        EvenementDAO eventDAO = DAOFactory.getEvenementDAO();
+
+                        Evenement event = eventDAO.find(eventID);
+                        if (event != null) {
+                            req.setAttribute("event", event);
+                        } else {
+                            req.setAttribute("message", "Événement introuvable.");
+                        }
+                    } else {
+                        req.setAttribute("message", "ID de l'événement manquant.");
+                    }
+                    vue = "modification_evenement.jsp";
                     break;
                 }
-                case "modifier_event":{
+                case "modifier_evenement": {
+                    String idStr = req.getParameter("id");
+                    if (idStr == null) {
+                        req.setAttribute("message", "ID de l'événement manquant.");
+                        vue = "modification_evenement.jsp";
+                        break;
+                    }
 
+                    int id = Integer.parseInt(idStr);
+                    String nom = req.getParameter("nom");
+                    LocalDateTime date = LocalDateTime.parse(req.getParameter("date"));
+                    int duree = Integer.parseInt(req.getParameter("duree"));
+                    String lieu = req.getParameter("lieu");
+                    String description = req.getParameter("description");
+
+                    Evenement updatedEvenement = new Evenement(id, date, nom, lieu, description, duree, login);
+
+                    EvenementDAO eventDAO = DAOFactory.getEvenementDAO();
+                    boolean updated = eventDAO.update(updatedEvenement);
+
+                    if (!updated) {
+                        req.setAttribute("message", "Erreur lors de la mise à jour.");
+                        vue = "modification_evenement.jsp";
+                    } else {
+                        req.setAttribute("message", "Informations de l'évènement modifiées avec succès.");
+                        List<Evenement> listeEvents = eventDAO.findAll();
+                        req.setAttribute("events", listeEvents);
+                        vue = "evenements_crees.jsp";
+                    }
+
+                    break;
                 }
                 case "supprimer_event":{
                     int idToDelete = Integer.parseInt(req.getParameter("eventID"));

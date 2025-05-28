@@ -21,6 +21,16 @@ public class Evenement {
     private int duree;
     private String createur;
 
+    public Evenement(int id, LocalDateTime date, String nom, String lieu, String description, int duree, String createur) {
+        this.id = id;
+        this.date = date;
+        this.nom = nom;
+        this.lieu = lieu;
+        this.description = description;
+        this.duree = duree;
+        this.createur = createur;
+    }
+
     public Evenement(LocalDateTime date, String nom, String lieu, String description, int duree, String createur) {
         this.date = date;
         this.nom = nom;

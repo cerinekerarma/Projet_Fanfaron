@@ -444,7 +444,7 @@
       <td><%= event.getNom() %></td>
       <td>
         <form action="EvenementControler" method="post" style="display:inline;">
-          <input type="hidden" name="action" value="modifier_event" />
+          <input type="hidden" name="action" value="vers_modifier_event" />
           <input type="hidden" name="eventID" value="<%= event.getId() %>" />
           <button type="submit" class="btn-valider">Modifier</button>
         </form>
@@ -453,7 +453,7 @@
         <form action="EvenementControler" method="post" style="display:inline;">
           <input type="hidden" name="action" value="supprimer_event" />
           <input type="hidden" name="eventID" value="<%= event.getId() %>" />
-          <button type="submit" class="btn-valider" onclick="if(confirm('Confirmer la suppression de l évènement')) { document.getElementById('action').value='supprimer_event'; return true; } else { return false; }">Supprimer</button>
+          <button type="submit" class="btn-valider" onclick="return confirm('Confirmer la suppression de l\'évènement ?')">Supprimer</button>
         </form>
       </td>
     </tr>
