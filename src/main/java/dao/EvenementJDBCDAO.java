@@ -47,14 +47,14 @@ public class EvenementJDBCDAO implements EvenementDAO {
 
     @Override
     public boolean insert(Evenement evenement) {
-        String query = "INSERT INTO evenement (date, nom, lieu, description, type, createur) VALUES (?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO evenement (date, nom, lieu, description, duree, createur) VALUES (?, ?, ?, ?, ?, ?)";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setTimestamp(1, Timestamp.valueOf(evenement.getDate()));
             stmt.setString(2, evenement.getNom());
             stmt.setString(3, evenement.getLieu());
             stmt.setString(4, evenement.getDescription());
-            stmt.setString(5, evenement.getType());
+            stmt.setInt(5, evenement.getDuree());
             stmt.setString(6, evenement.getCreateur());
 
             return stmt.executeUpdate() > 0;
@@ -66,14 +66,14 @@ public class EvenementJDBCDAO implements EvenementDAO {
 
     @Override
     public boolean update(Evenement evenement) {
-        String query = "UPDATE evenement SET date = ?, nom = ?, lieu = ?, description = ?, type = ?, createur = ? WHERE id = ?";
+        String query = "UPDATE evenement SET date = ?, nom = ?, lieu = ?, description = ?, duree = ?, createur = ? WHERE id = ?";
         try (Connection conn = dbManager.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setTimestamp(1, Timestamp.valueOf(evenement.getDate()));
             stmt.setString(2, evenement.getNom());
             stmt.setString(3, evenement.getLieu());
             stmt.setString(4, evenement.getDescription());
-            stmt.setString(5, evenement.getType());
+            stmt.setInt(5, evenement.getDuree());
             stmt.setString(6, evenement.getCreateur());
             stmt.setInt(7, evenement.getId());
 
@@ -98,14 +98,14 @@ public class EvenementJDBCDAO implements EvenementDAO {
     }
 
     private Evenement ligneToEvenement(ResultSet rs) throws SQLException {
-        return new Evenement(
-                rs.getInt("id"),
+        Evenement evenement = new Evenement(
                 rs.getTimestamp("date").toLocalDateTime(),
                 rs.getString("nom"),
                 rs.getString("lieu"),
                 rs.getString("description"),
-                rs.getString("type"),
+                rs.getInt("duree"),
                 rs.getString("createur")
         );
-    }
-}
+        evenement.setId(rs.getInt("id"));
+        return evenement;
+    }}

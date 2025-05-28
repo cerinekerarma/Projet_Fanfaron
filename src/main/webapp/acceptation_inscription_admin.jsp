@@ -262,6 +262,12 @@
             transform: scale(1.05);
         }
 
+        button.btn-valider {
+            padding: 8px 16px;
+            font-size: 0.9rem;
+        }
+
+
         p.no-users {
             text-align: center;
             font-size: 1.15rem;
@@ -280,10 +286,6 @@
                 font-size: 2rem;
             }
 
-            button.btn-valider {
-                padding: 8px 16px;
-                font-size: 0.9rem;
-            }
 
             .content {
                 margin: 1rem;

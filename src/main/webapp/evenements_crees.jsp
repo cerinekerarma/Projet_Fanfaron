@@ -1,9 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<html lang="fr">
+<%@ page import="java.util.List" %>
+<%@ page import="dao.Groupe" %>
+<%@ page import="dao.Evenement" %>
+<%@ page import="dao.Fanfaron" %>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>La Farandole des Fanfarons</title>
+  <title>Evnmts crées par vous</title>
   <style>
     :root {
       --sunset-orange: #e4572e;
@@ -179,6 +181,30 @@
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
+    button.btn-valider {
+      background: linear-gradient(45deg, #ff6a5f, #feb47b);
+      border: none;
+      color: #fff;
+      padding: 10px 22px;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(254, 180, 123, 0.6);
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    button.btn-valider:hover {
+      box-shadow: 0 6px 25px rgba(255, 106, 95, 0.8);
+      transform: scale(1.05);
+    }
+
+    button.btn-valider {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
     .footer-dark {
       background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-deep));
       color: white;
@@ -218,12 +244,135 @@
       background: linear-gradient(180deg, var(--sunset-orange), var(--sunset-deep));
       border-radius: 8px;
     }
+
+
+    .footer-dark {
+      background: linear-gradient(135deg, var(--sunset-orange), var(--sunset-deep));
+      color: white;
+      text-align: center;
+      padding: 30px 20px;
+      border-top: 5px solid #ffb3b3;
+      font-family: var(--font-main);
+      border-radius: 20px 20px 0 0;
+    }
+    .footer-dark p {
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      color: white;
+    }
+
+    .footer-dark a {
+      color: var(--sunset-light);
+    }
+    .footer-dark a:hover {
+      color: white;
+    }
+    .footer-dark .copyright {
+      font-size: 0.85em;
+      margin-top: 10px;
+    }
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+    }
+
+    thead tr th {
+      background: rgba(28, 142, 161, 0.8);
+      color: white;
+      font-weight: 700;
+      padding: 14px 12px;
+      border-radius: 12px 12px 0 0;
+      box-shadow: 0 2px 10px rgba(24, 147, 147, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1.1px;
+      font-size: 0.95rem;
+    }
+
+    tbody tr {
+      background: #fff5f4;
+      box-shadow: 0 2px 10px rgba(255, 106, 95, 0.15);
+      border-radius: 12px;
+      transition: transform 0.25s ease;
+    }
+
+    tbody tr:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 20px rgba(255, 106, 95, 0.3);
+    }
+
+    tbody tr td {
+      text-align: center;
+      padding: 14px 10px;
+      color: #6f3a3a;
+      font-weight: 600;
+      border-bottom: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 12px;
+      table-layout: fixed;
+    }
+
+    thead tr th, tbody tr td {
+      width: 50%;
+    }
+
+    button.btn-valider {
+      padding: 8px 16px;
+      font-size: 0.9rem;
+    }
+
+    button.btn-valider {
+      background: linear-gradient(45deg, #ff6a5f, #feb47b);
+      border: none;
+      color: #fff;
+      padding: 10px 22px;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(254, 180, 123, 0.6);
+      transition: box-shadow 0.3s ease, transform 0.2s ease;
+      font-size: 1rem;
+      user-select: none;
+    }
+
+    button.btn-valider:hover {
+      box-shadow: 0 6px 25px rgba(255, 106, 95, 0.8);
+      transform: scale(1.05);
+    }
+
+    select {
+      background-color: var(--sunset-bg);
+      color: var(--sunset-deep);
+      border: 2px solid var(--sunset-orange);
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-family: var(--font-main);
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(255, 115, 39, 0.3);
+      transition: box-shadow 0.3s ease;
+    }
+
+    select:hover {
+      box-shadow: 0 6px 16px rgba(255, 115, 39, 0.5);
+    }
+
+    select:focus {
+      outline: none;
+      border-color: var(--sunset-hover);
+      box-shadow: 0 0 0 3px rgba(255, 87, 34, 0.3);
+    }
+
+
+
   </style>
-
-
 </head>
-
 <body>
+
 <nav class="navbar">
   <ul class="primary">
     <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilUser">Accueil</a></li>
@@ -259,39 +408,85 @@
   </div>
 </nav>
 
-<%
-  String msg = (String) request.getAttribute("message");
-  if (msg != null) {
-%>
-<h4><%= msg %></h4>
-<% } %>
-
 <div class="conteneur">
-  <h1>Bienvenue dans</h1>
-  <h1><em>La Farandole des Fanfarons</em></h1>
-  <img src="fanfare_img.jpg" alt="Fanfare en pleine action" class="fanfare-img">
-  <p>
-    FanfareHub, c’est la plateforme faite par et pour les fanfarons.
-    Que tu sois trompettiste déchaîné, percussionniste fidèle ou nouveau souffle curieux de rejoindre l'aventure,
-    ici tu trouveras tout ce qu’il te faut pour vivre ta fanfare à fond.<br><br>
-    Inscris-toi facilement, retrouve le planning des répétitions, inscris-toi aux prestations et ne rate aucun atelier !
-    Notre objectif : simplifier l’organisation, booster la convivialité et faire résonner la musique partout où la fanfare passe. 🎶
-  </p>
+  <h1>Les évènements que vous avez créé</h1>
+
+  <%
+    String message = (String) request.getAttribute("message");
+    if (message != null) {
+  %>
+  <h4 class="message"><%= message %></h4>
+  <%
+    }
+  %>
+
+  <%
+    Fanfaron fanfaron = (Fanfaron) session.getAttribute("user");
+    String login = fanfaron.getLogin();
+
+    List<Evenement> events = (List<Evenement>) request.getAttribute("events");
+    if (events != null && !events.isEmpty()) {
+  %>
+  <table>
+    <thead>
+    <tr>
+      <th>Évènement</th>
+      <th>Modifier</th>
+      <th>Supprimer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <%
+      for (Evenement event : events) {
+        if(event.getCreateur().equals(login)) {
+    %>
+    <tr>
+      <td><%= event.getNom() %></td>
+      <td>
+        <form action="EvenementControler" method="post" style="display:inline;">
+          <input type="hidden" name="action" value="modifier_event" />
+          <input type="hidden" name="eventID" value="<%= event.getId() %>" />
+          <button type="submit" class="btn-valider">Modifier</button>
+        </form>
+      </td>
+      <td>
+        <form action="EvenementControler" method="post" style="display:inline;">
+          <input type="hidden" name="action" value="supprimer_event" />
+          <input type="hidden" name="eventID" value="<%= event.getId() %>" />
+          <button type="submit" class="btn-valider" onclick="if(confirm('Confirmer la suppression de l évènement')) { document.getElementById('action').value='supprimer_event'; return true; } else { return false; }">Supprimer</button>
+        </form>
+      </td>
+    </tr>
+    <%
+      }
+    %>
+
+    <%
+      }
+    %>
+    </tbody>
+  </table>
+  <%
+  } else {
+  %>
+  <p class="no-users">Vous n'avez créé aucun évènement pour le moment.</p>
+  <%
+    }
+  %>
+
 </div>
 
 <div class="footer-dark">
   <footer>
-    <div class="container">
-      <p>
-        Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
-      </p>
-      <p class="copyright">Copyright © 2025</p>
-    </div>
+    <p>
+      Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
+    </p>
+    <p class="copyright">Copyright © 2025</p>
   </footer>
 </div>
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>

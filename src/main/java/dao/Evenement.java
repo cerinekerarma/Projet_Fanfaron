@@ -9,15 +9,25 @@ public class Evenement {
     private String lieu;
     private String description;
     private String type;
+
+    public int getDuree() {
+        return duree;
+    }
+
+    public void setDuree(int duree) {
+        this.duree = duree;
+    }
+
+    private int duree;
     private String createur;
 
-    public Evenement(int id, LocalDateTime date, String nom, String lieu, String description, String type, String createur) {
-        this.id = id;
+    public Evenement(LocalDateTime date, String nom, String lieu, String description, int duree, String createur) {
         this.date = date;
         this.nom = nom;
         this.lieu = lieu;
         this.description = description;
-        this.type = type;
+        this.duree = duree;
+        //this.type = type;
         this.createur = createur;
     }
 
@@ -85,7 +95,7 @@ public class Evenement {
                 ", nom='" + nom + '\'' +
                 ", lieu='" + lieu + '\'' +
                 ", description='" + description + '\'' +
-                ", type='" + type + '\'' +
+                ", duree='" + duree + '\'' +
                 ", createur='" + createur + '\'' +
                 '}';
     }

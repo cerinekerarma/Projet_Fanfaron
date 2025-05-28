@@ -358,7 +358,14 @@
                 <li><a href="${pageContext.request.contextPath}/EvenementControler">Rejoindre un évènement</a></li>
             </ul>
         </li>
-        <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
+        <li><a href="${pageContext.request.contextPath}/EvenementControler?action=creer_evenement">Créer un évènement</a></li>
+        <li>
+            <a href="#">Mes évènements</a>
+            <ul class="sub">
+                <li><a href="${pageContext.request.contextPath}/EvenementControler?action=vers_evenements_crees">Crées</a></li>
+                <li><a href="${pageContext.request.contextPath}/EvenementControler?action=vers_evenements_inscrits">Inscrits</a></li>
+            </ul>
+        </li>
     </ul>
 
     <div class="navbar-logo">
