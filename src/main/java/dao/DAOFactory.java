@@ -19,5 +19,11 @@ public class DAOFactory{
     public static InscriptionPupitreDAO getInscriptionPupitreDAO(){
         return new InscriptionPupitreJDBCDAO(dbManager);
     }
+    public static EvenementDAO getEvenementDAO(){
+        return new EvenementJDBCDAO(dbManager);
+    }
+    public static InscriptionEvenementDAO getInscriptionEvenementDAO(){
+        return new InscriptionEvenementJDBCDAO(dbManager);
+    }
 
 }
