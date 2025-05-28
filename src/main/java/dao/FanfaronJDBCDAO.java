@@ -47,11 +47,9 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
         String query;
 
         if (hasPassword) {
-            System.out.println("dans update (passowrd pas vide): "+fanfaron.getMdp());
-            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, mdp = digest(?, 'sha256'), crt_alimentaire = ?, activated = ? WHERE login = ?";
+            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, mdp = digest(?, 'sha256'), crt_alimentaire = ?, activated = ?, is_admin = ? WHERE login = ?";
         } else {
-            System.out.println("dans update (passowrd vide): "+fanfaron.getMdp());
-            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, crt_alimentaire = ?, activated = ? WHERE login = ?";
+            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, crt_alimentaire = ?, activated = ?, is_admin = ? WHERE login = ?";
         }
 
         try (Connection conn = dbManager.getConnection();
@@ -66,11 +64,13 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
                 stmt.setString(5, fanfaron.getMdp());
                 stmt.setString(6, fanfaron.getCrtAlimentaire());
                 stmt.setBoolean(7, fanfaron.isActivated());
-                stmt.setString(8, fanfaron.getLogin());
+                stmt.setBoolean(8, fanfaron.isAdmin());
+                stmt.setString(9, fanfaron.getLogin());
             } else {
                 stmt.setString(5, fanfaron.getCrtAlimentaire());
                 stmt.setBoolean(6, fanfaron.isActivated());
-                stmt.setString(7, fanfaron.getLogin());
+                stmt.setBoolean(7, fanfaron.isAdmin());
+                stmt.setString(8, fanfaron.getLogin());
             }
 
             int affectedRows = stmt.executeUpdate();

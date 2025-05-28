@@ -485,7 +485,7 @@
 
 
             <label for="login">Login :</label>
-            <input type="text" id="login" name="login" value="<%= fanfaron.getLogin() %>" required/>
+            <input type="text" id="login" name="login" value="<%= fanfaron.getLogin() %>" readonly/>
 
             <label for="name">Nom :</label>
             <input type="text" id="name" name="name" value="<%= fanfaron.getNom() %>" required/>
@@ -497,7 +497,7 @@
             <input type="email" id="mail" name="mail" value="<%= fanfaron.getAdresse() %>" required/>
 
             <label for="password">Mot de passe :</label>
-            <input type="password" id="password" name="password" />
+            <input type="password" id="password" name="password" readonly />
 
             <fieldset>
                 <legend>Genre :</legend>

@@ -258,6 +258,57 @@ public class UserControler extends HttpServlet {
                         break;
                     }
                 }
+                case "rendre_admin":{
+                    HttpSession session = req.getSession();
+                    Fanfaron currentUser = (Fanfaron) session.getAttribute("user");
+
+                    if (currentUser == null || !currentUser.isAdmin()) {
+                        vue = "connexion.jsp";
+                        break;
+                    }
+
+                    String login = req.getParameter("login");
+                    FanfaronDAO fanfaronDAO = DAOFactory.getFanfaronDAO();
+
+                    Fanfaron fanfaron = fanfaronDAO.find(login);
+                    if (fanfaron == null) {
+                        req.setAttribute("message", "Utilisateur non trouvé.");
+                        vue = "modification_users_admin.jsp";
+                        break;
+                    }
+
+                    fanfaron.setIsAdmin(true);
+                    if(!fanfaron.isActivated()){
+                        fanfaron.setActivated(true);
+                    }
+
+                    Fanfaron updatedFanfaron = new Fanfaron(
+                            login, fanfaron.getNom(), fanfaron.getPrenom(),
+                            fanfaron.getAdresse(), fanfaron.getGenre(),
+                            fanfaron.getMdp(), fanfaron.getCrtAlimentaire(),
+                            fanfaron.getDerniereConnection(),
+                            fanfaron.getDateCreation(),
+                            true,
+                            true
+                    );
+
+
+                    boolean updated = fanfaronDAO.update(updatedFanfaron);
+
+                    if (!updated) {
+                        req.setAttribute("message", "Erreur lors de la mise à jour.");
+                        vue = "modification_users_admin.jsp";
+                    } else {
+                        req.setAttribute("message", "User "+login+" devenu administrateur avec succès.");
+                        List<Fanfaron> listeFanfarons = fanfaronDAO.findAll();
+                        req.setAttribute("fanfarons", listeFanfarons);
+                        System.out.println(login+" is admin: "+fanfaron.isAdmin());
+                        vue = "modification_users_admin.jsp";
+                    }
+
+                    break;
+
+                }
                 case "modifier_infos_users_admin": {
                     HttpSession session = req.getSession();
                     Fanfaron currentUser = (Fanfaron) session.getAttribute("user");

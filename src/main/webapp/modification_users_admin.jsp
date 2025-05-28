@@ -388,7 +388,7 @@
             <img src="images/profil.png" alt="Profil" />
             <ul class="avatar-menu">
                 <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil_admin">Profil</a></li>
-                <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=deconnexion">Déconnexion</a></li>
             </ul>
         </div>
     </div>
@@ -412,6 +412,7 @@
             <th>User</th>
             <th>Modifier</th>
             <th>Supprimer</th>
+            <th>Rendre Admin</th>
         </tr>
         </thead>
         <tbody>
@@ -433,6 +434,13 @@
                     <input type="hidden" name="action" value="suppression_par_admin" />
                     <input type="hidden" name="login" value="<%= fanfaron.getLogin() %>" />
                     <button type="submit" class="btn-modifier" onclick="if(confirm('Confirmer la suppression du compte')) { document.getElementById('action').value='suppression_par_admin'; return true; } else { return false; }">Supprimer</button>
+                </form>
+            </td>
+            <td>
+                <form action="UserControler" method="post" style="display:inline;">
+                    <input type="hidden" name="action" value="rendre_admin" />
+                    <input type="hidden" name="login" value="<%= fanfaron.getLogin() %>" />
+                    <button type="submit" class="btn-modifier">Rendre admin</button>
                 </form>
             </td>
 
