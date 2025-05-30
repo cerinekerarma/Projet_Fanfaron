@@ -1,6 +1,7 @@
 package dao;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Evenement {
     private int id;
@@ -108,5 +109,17 @@ public class Evenement {
                 ", duree='" + duree + '\'' +
                 ", createur='" + createur + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Evenement evenement = (Evenement) o;
+        return id == evenement.id && duree == evenement.duree && Objects.equals(date, evenement.date) && Objects.equals(nom, evenement.nom) && Objects.equals(lieu, evenement.lieu) && Objects.equals(description, evenement.description) && Objects.equals(type, evenement.type) && Objects.equals(createur, evenement.createur);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, nom, lieu, description, type, duree, createur);
     }
 }

@@ -11,7 +11,9 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @WebServlet("/EvenementControler")
 public class EvenementControler extends HttpServlet {
@@ -36,7 +38,7 @@ public class EvenementControler extends HttpServlet {
                     int eventId = Integer.parseInt(req.getParameter("evenementId"));
                     int pupitreId = Integer.parseInt(req.getParameter("pupitreId"));
                     InscriptionEvenementDAO inscDAO = DAOFactory.getInscriptionEvenementDAO();
-                    boolean conf = inscDAO.insert(new InscriptionEvenement(login, eventId, pupitreId, "incertain"));
+                    boolean conf = inscDAO.insert(new InscriptionEvenement(login, pupitreId, eventId, "incertain"));
                     req.setAttribute("message", conf ?
                             "Vous avez bien été inscrit à l'événement !" :
                             "Erreur lors de votre inscription...");
@@ -67,6 +69,25 @@ public class EvenementControler extends HttpServlet {
                         req.setAttribute("message", "ID de l'événement manquant.");
                     }
                     vue = "modification_evenement.jsp";
+                    break;
+                }
+                case "vers_evenements_inscrits":{
+                    vue = "evenement.jsp";
+                    break;
+                }
+                case "changerStatut":{
+                    int evenementId = Integer.parseInt(req.getParameter("evenementId"));
+                    String statut = req.getParameter("statut");
+                    InscriptionEvenementDAO inscDAO = DAOFactory.getInscriptionEvenementDAO();
+                    InscriptionEvenement insc = inscDAO.find(login, evenementId);
+                    insc.setStatus(statut);
+                    boolean updated = inscDAO.update(insc);
+                    if (!updated) {
+                        req.setAttribute("message", "Erreur lors de la mise à jour du statut.");
+                    } else {
+                        req.setAttribute("message", "Votre status a bien été mis à jour !");
+                    }
+                    vue = "evenement.jsp";
                     break;
                 }
                 case "modifier_evenement": {
@@ -201,14 +222,17 @@ public class EvenementControler extends HttpServlet {
 
         InscriptionEvenementDAO inscDAO = DAOFactory.getInscriptionEvenementDAO();
         List<InscriptionEvenement> mesInscriptions = inscDAO.findAllByFanfaron(login);
+        Map<Evenement, InscriptionEvenement> mesStatus = new HashMap<>();
 
         List<Evenement> evenementsInscrits = new ArrayList<>();
         for (InscriptionEvenement inscription : mesInscriptions) {
             Evenement e = evenementDAO.find(inscription.getIdEvenement());
+            mesStatus.put(e, inscription);
             evenementsInscrits.add(e);
             tousEvenements.remove(e);
         }
 
+        req.setAttribute("status", mesStatus);
         req.setAttribute("evenementsInscrits", evenementsInscrits);
         req.setAttribute("evenementsDisponibles", tousEvenements);
 

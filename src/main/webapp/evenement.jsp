@@ -2,6 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="dao.Evenement" %>
 <%@ page import="dao.Pupitre" %>
+<%@ page import="dao.InscriptionEvenement" %>
+<%@ page import="java.util.Map" %>
 <html>
 <head>
     <title>Inscription à un Groupe</title>
@@ -397,6 +399,7 @@
     <h2>Évènements auxquels vous êtes inscrit</h2>
     <%
         List<Evenement> evenementsInscrits = (List<Evenement>) request.getAttribute("evenementsInscrits");
+        Map<Evenement, InscriptionEvenement> mesStatus = (Map<Evenement, InscriptionEvenement>) request.getAttribute("status");
         if (evenementsInscrits != null && !evenementsInscrits.isEmpty()) {
     %>
     <table>
@@ -405,6 +408,7 @@
             <th>Nom</th>
             <th>Date</th>
             <th>Lieu</th>
+            <th>Statut</th>
             <th>Action</th>
         </tr>
         </thead>
@@ -416,7 +420,18 @@
             <td><%= evt.getLieu() %></td>
             <td>
                 <form action="EvenementControler" method="post">
-                    <input type="hidden" name="action" value="quitter" />
+                    <input type="hidden" name="action" value="changerStatut" />
+                    <input type="hidden" name="evenementId" value="<%= evt.getId() %>" />
+                    <select name="statut" onchange="this.form.submit()">
+                        <option value="présent" <%= "présent".equals(mesStatus.get(evt).getStatus()) ? "selected" : "" %>>Présent</option>
+                        <option value="absent" <%= "absent".equals(mesStatus.get(evt).getStatus()) ? "selected" : "" %>>Absent</option>
+                        <option value="incertain" <%= "incertain".equals(mesStatus.get(evt).getStatus()) ? "selected" : "" %>>Incertain</option>
+                    </select>
+                </form>
+            </td>
+            <td>
+                <form action="EvenementControler" method="post">
+                    <input type="hidden" name="action" value="desinscription" />
                     <input type="hidden" name="evenementId" value="<%= evt.getId() %>" />
                     <button type="submit" class="btn-valider">Quitter</button>
                 </form>
