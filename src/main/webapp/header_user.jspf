@@ -1,0 +1,71 @@
+<%@ page import="dao.Fanfaron" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+
+<meta charset="UTF-8">
+<style>
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-main);
+        background: url('${pageContext.request.contextPath}/images/instruments.png') top center repeat;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .conteneur {
+        max-width: 700px;
+        margin: 100px auto 40px;
+        background: url('${pageContext.request.contextPath}/images/sunset.jpeg') center/cover no-repeat;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(255, 115, 39, 0.8);
+        color: var(--sunset-deep);
+        flex: 1;
+        background-blend-mode: overlay;
+    }
+</style>
+
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+<nav class="navbar">
+    <ul class="primary">
+        <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilUser">Accueil</a></li>
+        <li>
+            <a href="#">Rejoindre</a>
+            <ul class="sub">
+                <li><a href="${pageContext.request.contextPath}/GroupeControler">Rejoindre un groupe</a></li>
+                <li><a href="${pageContext.request.contextPath}/PupitreControler">Rejoindre un pupitre</a></li>
+                <li><a href="${pageContext.request.contextPath}/EvenementControler">Rejoindre un évènement</a></li>
+            </ul>
+        </li>
+        <li><a href="${pageContext.request.contextPath}/EvenementControler?action=creer_evenement">Créer un évènement</a></li>
+        <li>
+            <a href="#">Mes évènements</a>
+            <ul class="sub">
+                <li><a href="${pageContext.request.contextPath}/EvenementControler?action=vers_evenements_crees">Crées</a></li>
+                <li><a href="${pageContext.request.contextPath}/EvenementControler?action=vers_evenements_inscrits">Inscrits</a></li>
+            </ul>
+        </li>
+    </ul>
+    <div class="navbar-logo">
+        <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
+    </div>
+    <div class="avatar-dropdown">
+        <img src="${pageContext.request.contextPath}/images/profil.png" alt="Profil">
+        <ul class="avatar-menu">
+            <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil">Profil</a></li>
+            <%
+                Fanfaron f = (Fanfaron) session.getAttribute("user");
+                if (f != null && f.isAdmin()) {
+            %>
+            <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilAdmin">Page Admin</a></li>
+            <%
+                }
+            %>
+            <li><a href="${pageContext.request.contextPath}/UserControler?action=deconnexion">Déconnexion</a></li>
+        </ul>
+    </div>
+</nav>

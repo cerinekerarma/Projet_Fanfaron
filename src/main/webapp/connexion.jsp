@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -232,16 +232,7 @@
 
     </div>
 </div>
-<div class="footer-dark">
-    <footer>
-        <div class="container">
-            <p>
-                Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
-            </p>
-            <p class="copyright">Copyright © 2025</p>
-        </div>
-    </footer>
-</div>
+<%@ include file="footer.jspf" %>
 
 </body>
 </html>

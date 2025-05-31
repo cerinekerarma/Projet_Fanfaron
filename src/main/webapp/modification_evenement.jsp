@@ -1,7 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="java.util.List" %>
 <%@ page import="dao.Evenement" %>
-<%@ page import="dao.Pupitre" %>
 <%@ page import="dao.Fanfaron" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <html>
