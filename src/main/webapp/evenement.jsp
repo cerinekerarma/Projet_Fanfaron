@@ -464,13 +464,16 @@
             <input type="hidden" name="evenementId" value="<%= e.getId() %>" />
 
             <label for="pupitre-<%= e.getId() %>">Choisissez un pupitre :</label>
+            <% if (pupitres != null && !pupitres.isEmpty()) { %>
             <select name="pupitreId" id="pupitre-<%= e.getId() %>">
                 <% for (Pupitre p : pupitres) { %>
                 <option value="<%= p.getId() %>"><%= p.getNom() %></option>
                 <% } %>
             </select>
-
-            <button type="submit">S'inscrire</button>
+            <button type="submit" class="btn-valider">S'inscrire</button>
+            <% } else { %>
+            <p>Vous n'êtes pas encore affecté à un pupitre. Veuillez vous inscrire à un pupitre.</p>
+            <% } %>
         </form>
     </div>
         <%
