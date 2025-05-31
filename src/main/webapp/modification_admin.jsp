@@ -451,7 +451,7 @@
       <img src="images/profil.png" alt="Profil" />
       <ul class="avatar-menu">
         <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil_admin">Profil</a></li>
-        <li><a href="${pageContext.request.contextPath}/UserControler?action=versConnexion">Déconnexion</a></li>
+        <li><a href="${pageContext.request.contextPath}/UserControler?action=dconnexion">Déconnexion</a></li>
       </ul>
     </div>
   </div>
