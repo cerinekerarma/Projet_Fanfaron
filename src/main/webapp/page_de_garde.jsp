@@ -249,19 +249,7 @@
     </p>
 </div>
 
-<div class="footer-dark">
-    <footer>
-        <div class="container">
-            <p>
-                Répertoire · À propos de nous · Offres d'emploi · Développeurs · Aide · Mentions légales · Confidentialité · Politique de cookies · Informations légales
-            </p>
-            <p class="copyright">Copyright © 2025</p>
-        </div>
-    </footer>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+<%@ include file="footer.jspf" %>
 
 </body>
 </html>
