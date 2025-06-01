@@ -313,3 +313,175 @@ p.no-users {
         padding: 1.2rem;
     }
 }
+
+
+form label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: bold;
+    color: #a63d1a;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d08662;
+    background-color: rgba(255, 248, 240, 0.9);
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    border-color: #ff6f3c;
+    outline: none;
+}
+
+fieldset {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: 1px solid #e5b79a;
+    border-radius: 6px;
+    background-color: rgba(255, 248, 240, 0.85);
+}
+
+fieldset legend {
+    font-weight: bold;
+    color: #b63e18;
+    padding: 0 5px;
+}
+
+form input::placeholder {
+    color: rgba(255, 161, 114, 0.8);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+
+button[type="submit"],
+button[type="button"].btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: #e4572e;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover,
+button[type="button"].btn:hover {
+    background-color: #b63e18;
+}
+
+a {
+    color: #b63e18;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #812d11;
+}
+
+form label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: bold;
+    color: #a63d1a;
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d08662;
+    background-color: rgba(255, 248, 240, 0.9);
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+form input:focus {
+    border-color: #ff6f3c;
+    outline: none;
+}
+
+fieldset {
+    margin-top: 20px;
+    padding: 10px 15px;
+    border: 1px solid #e5b79a;
+    border-radius: 6px;
+    background-color: rgba(255, 248, 240, 0.85);
+}
+
+fieldset legend {
+    font-weight: bold;
+    color: #b63e18;
+    padding: 0 5px;
+}
+
+form input::placeholder {
+    color: rgba(255, 161, 114, 0.8);
+    font-style: italic;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+}
+
+
+button[type="submit"],
+button[type="button"].btn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: #e4572e;
+    color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover,
+button[type="button"].btn:hover {
+    background-color: #b63e18;
+}
+
+a {
+    color: #b63e18;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #812d11;
+}
+
+button.btn-modifier {
+    background: linear-gradient(45deg, #ff6a5f, #feb47b);
+    border: none;
+    color: #fff;
+    padding: 10px 22px;
+    font-weight: 700;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(254, 180, 123, 0.6);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    font-size: 1rem;
+    user-select: none;
+}
+
+button.btn-modifier:hover {
+    box-shadow: 0 6px 25px rgba(255, 106, 95, 0.8);
+    transform: scale(1.05);
+}
