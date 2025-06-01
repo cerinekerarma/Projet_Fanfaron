@@ -1,0 +1,55 @@
+<%@ page import="dao.Fanfaron" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+
+<style>
+
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: var(--font-main);
+        background-color: antiquewhite;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content {
+        padding: 2em;
+        flex: 1 0 auto;
+        padding-top: 80px;
+    }
+
+</style>
+
+<nav class="navbar">
+    <ul class="primary">
+        <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilAdmin">Accueil</a></li>
+        <li><a href="evenement_creer.jsp">Créer un évènement</a></li>
+        <li>
+            <a href="#">Gérer les comptes</a>
+            <ul class="sub">
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=gerer_comptes">Nouveaux comptes</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=modifier_comptes">Comptes existants</a></li>
+            </ul>
+        </li>
+        <li><a href="${pageContext.request.contextPath}/UserControler?action=versAjoutUserAdmin">Ajouter un user</a></li>
+    </ul>
+    <div class="navbar-logo">
+        <img src="${pageContext.request.contextPath}/images/logoFF.png" alt="Logo FF" height="50">
+    </div>
+
+    <div class="navbar-right">
+        <div class="avatar-dropdown">
+            <img src="images/profil.png" alt="Profil" />
+            <ul class="avatar-menu">
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=consulter_profil_admin">Profil</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=versAcceuilUser">Page Utilisateur</a></li>
+                <li><a href="${pageContext.request.contextPath}/UserControler?action=deconnexion">Déconnexion</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
