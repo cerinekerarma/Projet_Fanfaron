@@ -56,6 +56,11 @@ public class UserControler extends HttpServlet {
                     HttpSession session = req.getSession(true);
                     session.setAttribute("user", fanfaron);
 
+                    Timestamp tempsActuel = Timestamp.from(Instant.now());
+
+                    fanfaron.setDerniereConnection(tempsActuel);
+                    fanfaronDAO.update(fanfaron);
+
                     if (!fanfaron.isAdmin()) {
                         System.out.println("Tentative de connexion reussie pour: login=" + login + ", password=" + password);
                         vue = "acceuil.jsp";
