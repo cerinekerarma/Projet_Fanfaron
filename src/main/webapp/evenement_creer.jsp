@@ -41,7 +41,7 @@
             <input type="datetime-local" id="date" name="date" required />
 
             <label for="duree">Durée (en minutes) :</label>
-            <input type="number" id="duree" name="duree" placeholder="Ex: 90" min="30" required />
+            <input type="number" id="duree" name="duree" placeholder="Ex: 90" required />
 
             <label for="lieu">Lieu :</label>
             <input type="text" id="lieu" name="lieu" placeholder="Ex: 1 rue Polytech Lyon 69100 Villeurbanne ou Polytech Lyon" required />

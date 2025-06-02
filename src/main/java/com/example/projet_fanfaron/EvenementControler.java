@@ -202,6 +202,12 @@ public class EvenementControler extends HttpServlet {
                         break;
                     }
             }
+            case "tout_evenements":{
+                    vue = "tout_evenements.jsp";
+                    afficherTousEvenements(req, login);
+                    req.getRequestDispatcher("/"+vue).forward(req, res);
+                    return;
+                }
                 default:
                     res.sendError(404, "Action non supportée");
                     return;
@@ -253,6 +259,37 @@ public class EvenementControler extends HttpServlet {
             }
         }
         req.setAttribute("events", evenementsCrees);
+
+    }
+
+    private void afficherTousEvenements(HttpServletRequest req, String login) {
+        EvenementDAO evenementDAO = DAOFactory.getEvenementDAO();
+        List<Evenement> tousEvenements = evenementDAO.findAll();
+
+        InscriptionEvenementDAO inscDAO = DAOFactory.getInscriptionEvenementDAO();
+        List<InscriptionEvenement> mesInscriptions = inscDAO.findAll();
+        Map<Evenement, List<InscriptionEvenement>> inscriptions = new HashMap<>();
+
+        for (Evenement event : tousEvenements) {
+            inscriptions.put(event, new ArrayList<InscriptionEvenement>());
+        }
+
+        List<Evenement> evenementsInscrits = new ArrayList<>();
+        for (InscriptionEvenement inscription : mesInscriptions) {
+            Evenement e = evenementDAO.find(inscription.getIdEvenement());
+            inscriptions.get(e).add(inscription);
+        }
+
+        req.setAttribute("evenementsInscrits", inscriptions);
+        req.setAttribute("evenementsDisponibles", tousEvenements);
+
+        PupitreDAO pupitreDAO = DAOFactory.getPupitreDAO();
+        List<Pupitre> pupitres = pupitreDAO.findAll();
+        Map<Integer, String> allPupittres = new HashMap<>();
+        for (Pupitre pupitre : pupitres) {
+            allPupittres.put(pupitre.getId(), pupitre.getNom());
+        }
+        req.setAttribute("pupitres", allPupittres);
 
     }
 

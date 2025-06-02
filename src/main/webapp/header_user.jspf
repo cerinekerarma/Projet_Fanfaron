@@ -46,6 +46,7 @@
             <a href="#">Mes évènements</a>
             <ul class="sub">
                 <li><a href="${pageContext.request.contextPath}/EvenementControler?action=vers_evenements_crees">Crées</a></li>
+                <li><a href="${pageContext.request.contextPath}/EvenementControler?action=tout_evenements">Tous</a></li>
                 <li><a href="${pageContext.request.contextPath}/EvenementControler?action=vers_evenements_inscrits">Inscrits</a></li>
             </ul>
         </li>
