@@ -59,6 +59,7 @@ public class UserControler extends HttpServlet {
                     Timestamp tempsActuel = Timestamp.from(Instant.now());
 
                     fanfaron.setDerniereConnection(tempsActuel);
+                    fanfaron.setMdp(null);
                     fanfaronDAO.update(fanfaron);
 
                     if (!fanfaron.isAdmin()) {

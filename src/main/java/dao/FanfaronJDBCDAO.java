@@ -49,7 +49,7 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
         if (hasPassword) {
             query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, mdp = digest(?, 'sha256'), crt_alimentaire = ?, activated = ?, is_admin = ? WHERE login = ?";
         } else {
-            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, crt_alimentaire = ?, activated = ?, is_admin = ? WHERE login = ?";
+            query = "UPDATE Fanfaron SET nom = ?, prenom = ?, adresse = ?, genre = ?, crt_alimentaire = ?, derniere_connection = ?, activated = ?, is_admin = ? WHERE login = ?";
         }
 
         try (Connection conn = dbManager.getConnection();
@@ -68,9 +68,10 @@ public class FanfaronJDBCDAO implements FanfaronDAO {
                 stmt.setString(9, fanfaron.getLogin());
             } else {
                 stmt.setString(5, fanfaron.getCrtAlimentaire());
-                stmt.setBoolean(6, fanfaron.isActivated());
-                stmt.setBoolean(7, fanfaron.isAdmin());
-                stmt.setString(8, fanfaron.getLogin());
+                stmt.setTimestamp(6, fanfaron.getDerniereConnection());
+                stmt.setBoolean(7, fanfaron.isActivated());
+                stmt.setBoolean(8, fanfaron.isAdmin());
+                stmt.setString(9, fanfaron.getLogin());
             }
 
             int affectedRows = stmt.executeUpdate();
